@@ -1,0 +1,286 @@
+#
+# File - .twmrc
+#
+# Startup File for "twm" Window Manager
+#
+
+#	AutoRaise {
+#	    "xterm"
+#	    "xclock"
+#	}
+#	AutoRelativeResize
+	BorderWidth 2
+#	ButtonIdent 1
+#	ClientBorderWidth
+	Color {
+	    BorderColor "black"
+	    BorderTileForeground "black"
+	    BorderTileBackground "white"
+	    DefaultBackground "wheat"
+	    DefaultForeground "navyblue"
+	    IconBackground "white"
+	    IconBorderColor "blue"
+	    IconForeground "black"
+	    IconManagerBackground "white" {
+		"Emacs"		"burlywood1"
+		"xterm"		"bisque2"
+		"console"	"burlywood3"
+		"xmh"		"cornsilk"
+		}
+	    IconManagerForeground "darkslategray" {
+		"Emacs"		"darkslategray"
+		"xterm"		"darkslategray"
+		"console"	"darkslategray"
+		"xmh"		"darkslategray"
+	    }
+	    IconManagerHighlight "darkslategray"
+	    MenuBackground "lightsalmon"
+	    MenuForeground "firebrick"
+	    MenuShadowColor "gray"
+	    MenuTitleBackground "firebrick"
+	    MenuTitleForeground "lightsalmon"
+	    TitleBackground "firebrick"
+	    TitleForeground "bisque2"
+	}
+#	ConstrainedMoveTime 400
+#	Cursors
+#	{
+#	    Frame	"top_left_arrow"
+#	    Title	"top_left_arrow"
+#	    Icon	"top_left_arrow"
+#	    IconMgr	"top_left_arrow"
+#	    Move	"fleur"
+#	    Resize	"fleur"
+#	    Menu	"sb_left_arrow"
+#	    Button	"hand2"
+#	    Wait	"watch"
+#	    Select	"dot"
+#	    Destroy	"pirate"
+#	}
+	DecorateTransients
+	DontIconifyByUnmapping {
+	    "xpostit"
+	}
+	DontMoveOff
+#	DontSqueezeTitle
+#	ForceIcons
+#	FramePadding 2
+#	IconDirectory /usr/local/X11/include/X11/bitmaps
+	IconifyByUnmapping
+	IconFont "-misc-fixed-medium-r-normal--13-120-75-75-c-80-iso8859-1"
+	IconManagerDontShow { 
+	    "xclock" 
+	    "xbiff" 
+	    "xpostit" 
+	    "PostItNote" 
+	}
+	IconManagerFont "-misc-fixed-medium-r-normal--13-120-75-75-c-80-iso8859-1"
+	IconManagerGeometry "=150x100+0+0"
+#	IconManagers {
+#	}
+#	IconManagerShow {
+#	}
+#	IconRegion -0-0 South East 50 50
+#	Icons {
+#	}
+#	InterpolateMenuColors
+#	MakeTitle {
+#	}
+#	MaxWindowSize "30000x30000"
+	MenuFont "-misc-fixed-bold-r-normal--15-140-75-75-c-90-iso8859-1"
+	Monochrome {
+	    BorderColor "black"
+	    BorderTileForeground "black"
+	    BorderTileBackground "white"
+	    DefaultBackground "white"
+	    DefaultForeground "black"
+	    IconBackground "white"
+	    IconBorderColor "black"
+	    IconForeground "black"
+	    IconManagerBackground "white"
+	    IconManagerForeground "black"
+	    IconManagerHighlight "black"
+	    MenuBackground "white"
+	    MenuForeground "black"
+	    MenuShadowColor "black"
+	    MenuTitleBackground "white"
+	    MenuTitleForeground "black"
+	    TitleBackground "white"
+	    TitleForeground "black"
+	}
+#	MoveDelta 0
+	NoBackingStore
+#	NoCaseSensitive
+#	NoDefaults
+#	NoGrabServer
+	NoHighlight { 
+	    "xclock" 
+	    "xbiff" 
+	}
+#	NoIconManagers
+#	NoMenuShadows
+#	NoRaiseOnDeiconify
+#	NoRaiseOnMove
+#	NoRaiseOnResize
+#	NoRaiseOnWarp
+#	NoSaveUnders
+	NoTitle { 
+	    "xclock" 
+	    "xload" 
+	    "asg" 
+	    "xpostit" 
+	    "xbiff"
+            "TWM Icon Manager"
+	}
+#	NoTitleFocus
+#	NoTitleHighlight {
+#	}
+#	OpaqueMove
+#	Pixmaps {
+#	}
+#	RandomPlacement
+	ResizeFont "-misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso8859-1"
+	RestartPreviousState
+	ShowIconManager
+	SortIconManager
+#	SqueezeTitle {
+#	}
+#	StartIconified {
+#	}
+#	TitleButtonBorderWidth 1
+	TitleFont "-adobe-courier-bold-r-normal--18-180-75-75-m-110-iso8859-1"
+#	TitlePadding 8
+#	UnknownIcon "icon"
+#	WarpCursor
+#	UsePPosition "off"
+#	WarpCursor {
+#	    "xterm"
+#	}
+#	WindowRing {
+#	    "xterm"
+#	}
+#	WarpUnmapped
+#	XorValue 1
+#	WindowFunction f.deiconify
+#	Zoom 5
+	DefaultFunction f.beep
+
+#
+# Button Bindings
+#
+LeftTitleButton "opendot" = f.delete
+
+Button1	= : root : f.menu "window ops"
+Button2 = : root : f.menu "clients"
+Button3 = : root : f.menu "hosts"
+
+Button1	= m : root : f.menu "TwmWindows"
+Button2 = m : root : f.menu "clients"
+Button3 = m : root : f.menu "preferences"
+
+Button1 = m : window : f.raiselower
+Button2 = m : window : f.move
+Button3 = m : window : f.resize
+
+Button1	= : title : f.raiselower
+Button2	= : title : f.move
+Button3	= : title : f.iconify
+
+Button2 = m : title : f.lower
+
+# Defunct Bindings for Icons
+#
+Button1 = m : icon : f.iconify
+Button2 = m : icon : f.move
+Button3 = m : icon : f.iconify
+
+Button1 = : icon : f.iconify
+Button2 = : icon : f.move
+Button3 = : icon : f.iconify
+
+# Menu Definitions
+#
+
+Menu "window ops" {
+"Window Operations"	f.title
+"Delete"	f.delete
+"Destroy"	f.destroy
+"Iconify"	f.iconify
+"Identify"	f.identify
+"Move"		f.move
+"Quit twm"	f.quit
+"Raise/Lower"   f.raiselower
+"Refresh"	f.refresh
+"Resize"	f.resize
+"Source twm"	f.restart 
+"More ops"	f.menu "more ops"
+}
+
+Menu "more ops" {
+"AutoRaise"	f.autoraise
+"Beep"		f.beep
+"Circle Down"   f.circledown
+"Circle Up"     f.circleup
+#"Colormap"	f.colormap "default"
+"Deiconify"	f.deiconify
+"Focus"		f.focus
+"Force Move"	f.forcemove
+"Full Zoom"	f.fullzoom
+"Hide Mgr"	f.hideiconmgr
+"Lower"		f.lower
+"Raise"		f.raise
+"Save"		f.saveyourself
+"Show Mgr"	f.showiconmgr
+"Unfocus"	f.unfocus
+"Version"	f.version
+#"Warp Next"	f.warpring "next"
+#"Warp Prev"	f.warpring "prev"
+#"Warp xterm"   f.warpto "xterm"
+#"Warp Mgr"	f.wartoiconmgr
+#"Warp Screen"  f.warptoscreen "next"
+"Win Refresh"	f.winrefresh
+"Zoom"		f.zoom
+#"Zoom Bottom"	f.bottomzoom
+#"Zoom Full"	f.fullzoom
+#"Zoom Left"	f.leftzoom
+#"Zoom Right"	f.rightzoom
+#"Zoom Top"	f.topzoom
+}
+
+Menu "clients" {
+"X Clients"	f.title
+"New Shell"	!"xterm -T Shell -n Shell &"
+".Xdefaults"	!"xrdb -merge $HOME/.Xdefaults &"
+"Clock"		!"xclock -analog &"
+"Emacs"		!"/usr/local/gnu/emacs < /dev/null > /dev/null 2>&1 &"
+"Xcalc"		!"xcalc &"
+"Xmh"		!"xmh &"
+}
+
+Menu "preferences" {
+"Preferences"	f.title
+"Default"	!"xsetroot -default &"
+"Background"	f.title
+"Root Color"	!"xsetroot -fg red -bg black -mod 4 4 &"
+"Root B&W"	!"xsetroot -fg black -bg white -mod 3 3 &"
+"Bell"		f.title
+"Bell Loud"	!"xset b 90 &"
+"Bell Normal"	!"xset b 50 &"
+"Bell Off"	!"xset b off &"
+"Key Click"	f.title
+"Click Loud"	!"xset c 90 &"
+"Click Soft"	!"xset c 50 &"
+"Click Off"	!"xset c off &"
+"Mouse"		f.title
+"Mouse Fast"	!"xset m 4 2 &"
+"Mouse Normal"	!"xset m 2 5 &"
+"Mouse Slow"	!"xset m 1 1 &"
+}
+
+menu "hosts" {
+"Hosts"		f.title
+"Arthur"    !"rterm Arthur &"
+"Ector"	    !"rterm Ector &"
+"Mentor.cc" !"rterm 'Mentor.cc -l bogus' &"
+}
+

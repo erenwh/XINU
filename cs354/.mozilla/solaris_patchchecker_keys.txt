@@ -1,0 +1,3 @@
+# Solaris patch checker 'key' file
+# This script is for private use of the Mozilla patch checker for Solaris
+spckey=lore.cs.purdue.edu:/opt/csw/lib/mozilla;598903

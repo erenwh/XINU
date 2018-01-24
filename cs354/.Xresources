@@ -1,0 +1,32 @@
+xbiff*geometry:		+0-0
+xbiff*update:		30
+xbiff*foreground:	firebrick
+xbiff*background:	slategray3
+
+xclock*geometry:	100x100+154+0
+xclock*translations:	#augment \n\
+	<Key>Q:		quit()
+xclock*analog:		on
+xclock*update:		60
+xclock*padding:		2
+xclock*foreground:	firebrick
+xclock*background:	SlateGray3
+xclock*hands:		firebrick
+
+XTerm*iconic:		off
+XTerm*loginShell:	on
+XTerm*reverseWrap:	on
+XTerm*saveLines:	200
+XTerm*scrollBar:	on
+XTerm*visualBell:	off
+XTerm*font:		7x13
+
+Dtterm*loginShell:	on
+
+Mwm*buttonBindings:	DefaultButtonBindings
+Mwm*keyboardFocusPolicy:	pointer
+Mwm*iconDecoration:	activelabel label
+Mwm*iconPlacement:	top left
+Mwm*resizeBorderWidth:	0
+Mwm*frameBorderWidth:	0
+Mwm*showFeedback:	resize quit

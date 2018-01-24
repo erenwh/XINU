@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+  
+  <meta name="GENERATOR"
+ content="Mozilla/4.79 [en] (X11; U; Linux 2.4.17 i686) [Netscape]">
+  <title>Lab 1: Getting Acquainted with XINU</title>
+</head>
+<body>
+<center>
+<h2>CS 354 Spring 2018</h2>
+</center>
+<center>
+<h2>Lab 1: Getting Acquainted with XINU (115 pts)</h2>
+</center>
+<center>
+<h2>Due: 01/30/2018 (Tue.), 11:59 PM</h2>
+</center>
+<h2>1. Objectives</h2>
+The objectives of this introductory lab are to familiarize you with the steps
+involved in compiling and running XINU in our lab.
+<hr width="100%">
+<h2>2. Readings</h2>
+<ol>
+  <li>    <a href="http://www.cs.purdue.edu/homes/cs354/xinu/xinu-setup.html">XINU set-up description</a></li>
+  <li>Chapters 1 and 2 from the XINU textbook.</li>
+</ol>
+
+<hr width="100%">
+<h2>3. Inspecting XINU's Run-time Environment [115 pts]</h2>
+
+<h3>Problem 3.1 (30 pts)</h3>
+
+<p>
+Follow the instructions in the
+<a href="http://www.cs.purdue.edu/homes/cs354/xinu/xinu-setup.html">XINU set-up description</a>
+which compiles the XINU source code on a frontend machine (Linux PC)
+in the XINU Lab, grabs an unused x86 Galileo backend machine, and 
+loads and bootstraps the compiled XINU image. Note that the frontend
+PC's terminal acts as a (remote) console of the dedicated
+backend Galileo x86 machine. If XINU bootstraps successfully,
+it will print a greeting message and start a simple shell
+called xsh. Run some commands on the shell and follow
+the disconnect procedure so that the backend is released.
+<b>Do not hold onto a backend: it is a shared resource.</b>
+</p>
+
+<p>
+(a) Inside the system/ subdirectory, you will find relevant
+source code of XINU. The file start.S contains assembly code
+that is executed after XINU loads on a backend. After
+performing bootstrap/initialization chores (the details are
+not relevant at this time), a call to function nulluser()
+is made. Locate where in system/ the source code of nulluser()
+is defined. (b) Toward the end of nulluser(), it calls the
+function create() -- a system call as discussed in class --
+to create a new running program (i.e.,
+process) whose code is the function main() contained in 
+main.c. 
+All processes in XINU are created using create() except the
+process that runs the function nulluser() which is "self-made."
+That is, it is the ancestor of all other processes.
+Find out where in the XINU source code this ancestor of all processes
+is located and what name, i.e., process ID (PID), it assigns itself. 
+To do so, track down the header file (header files are located in 
+the include/ directory) where the PID value of the ancestor process is
+specified. 
+(c) What does the ancestor process running
+the function nulluser() do for the rest of its existence? 
+(d) Does nulluser() ever return after being called by
+the code in start.S? (e) halt() is called after nulluser() in start.S.
+Where is the source code of halt() located and what does it do? 
+(f) What happens if you remove this function
+call from start.S? Does XINU run as before? (g) What happens if you replace the
+while-loop at the end of nulluser() with a call to halt()? Discuss all
+your findings.
+</p>
+
+<h3>Problem 3.2 (50 pts)</h3>
+
+<p>
+In Linux/UNIX, to create a new process that runs an
+executable binary, say, /bin/ls (or a.out), we first use the system call fork() to create a child
+process and then call the system call execve() with /bin/ls (or a.out) as an argument.
+In XINU we said that a newly created process is put in a "state of limbo," i.e., suspended, after
+it is created using create(). That is, the child process exists as an entry in the process table
+but it is marked as suspended (PR_SUSP). The definition of all XINU process states is specified
+in process.h under include/. Being in suspended state has the consequence that XINU will not assign CPU
+cycles to the process until its state is changed to ready (PR_READY) by calling resume().
+Look at the code of create() and resume() and determine how this is done.
+</p>
+<p>
+(a) What happens in Linux after a new process is created using fork()? Note, create() specifies
+what code to run as the child process through its first argument (a function pointer).
+(b) Determine who runs first: parent or child. Try to empirically gauge the answer by running test code
+on the frontend Linux PCs. (We will discuss scheduling of processes
+in modern operating systems, a complex topic, when discussing process management.)
+(c) As an app programmer, do you have a preference as to which process -- parent or child --
+should run next in Linux? Explain your reasoning.
+(d) For a child process created using fork() in Linux, it has to call execve() to make the
+child run executable code contained in a file (e.g., /bin/ls) as part of a file system
+specified in the argument of execve().
+In Linux, sometimes an app programmer just wants to create a new
+process to run an existing binary without going through the 2-step procedure of fork() and execve().
+Write a wrapper function, int newProcess(const char *filename), that internally calls
+fork() and execve() to make this happen where filename specifies the full pathname of an
+executable binary. Place the code of newProcess() in newProcess.C under system/.
+Annotate your code with comments to facilitate readability.
+</p>
+<p>
+(e) How is newProcess() fundamentally different from the way XINU's create() works?
+(f) Ignore stack size and process priority which are specified as arguments in create().
+How does Linux's clone() compare to XINU's create()?
+(g) How does Linux's posix_spawn() compared to your newProcess() implementation?
+(h) Is there a best way to create processes? Explain your reasoning.
+</p>
+
+<h3>Problem 3.3 (5 pts)</h3>
+
+<p>
+Customize the welcome message printed by XINU in main() so that it 
+prominently displays your name (last, first) and username. Preserve the new
+welcome message as part of your version of XINU during the
+rest of the semester and the labs to follow.
+</p>
+
+<h3>Problem 3.4 (30 pts)</h3>
+
+<p>
+Problems 3.1 and 3.2 looked at the overall picture and steps involved
+in starting XINU and running apps under XINU. To get a sense of 
+how to terminate processes and XINU itself, create a process that runs the
+code of a function onandon() by calling create() with stack size 2048
+and priority 30. onandon() should be an infinite loop that makes a
+XINU system call putc(CONSOLE, 'x') followed by system call
+sleep() with argument 2 within its loop. onandon() prints the character 'x',
+sleeps for 2 seconds, repeating this forever. The process running
+the function main(), after creating a child process that runs function
+onandon(), sleeps for 14 seconds, then calls XINU's kill()
+with the PID of the child process as argument. To verify that the
+child process has been terminated, check the process table data structure
+proctab. As in Problem 3.1, inspect the code where nulluser() resides
+to determine how proctab is initialized and how to access it. 
+Put this version of main() in main1.c under system/. The same goes
+for onandon() in onandon.c.
+</p>
+
+<p>
+Provide written answers to the above problems in Lab1Answers.pdf
+and place it in system/.
+</p>
+
+<p></p>
+<hr width="100%">
+<h2><b>Bonus Problem</b> [15 pts]</h2>
+
+<p>
+Extend the capability of XINU's xsh (source contained in shell/) by
+adding a new command of your own design.  Please add your new command
+in a new file, lab1cmd.c in the shell/ directory.
+Compile and test XINU with the
+enhanced xsh. Indicate in Lab1Answers.pdf if you have done the Bonus Problem. 
+Provide documentation of the added feature as comments inside the source code.
+</p>
+<p>
+<i>
+Note: The bonus problem provides an opportunity to earn extra credits that
+count toward the lab component of the course. It is purely optional.
+</i>
+</p>
+
+<p></p>
+
+
+<hr width="100%">
+<h2><b>Turn-in Instructions</b></h2>
+
+<p>
+Before submitting your work, make sure to double-check the
+<a href="http://www.cs.purdue.edu/homes/ogg/cs354_spring2018.html">TA Notes</a>
+to ensure that additional requirements and instructions have been followed.
+</p>
+
+<p>Electronic turn-in instructions:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; i) Go to the xinu-spring2018/compile
+directory and run "make clean".</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ii) Go to the directory of which
+your xinu-spring2018 directory is a subdirectory. (Note: please do not rename xinu-spring2018
+or any of its subdirectories.)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+e.g., if /homes/bob/xinu-spring2018 is your directory structure, go to 
+/homes/bob
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; iii) Type the following command
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+turnin -c cs354 -p lab1 xinu-spring2018</p>
+
+<p>
+<i>Please make sure to disable all debugging output before submitting your code.</i>
+</p>
+
+<hr><a href="../index.html">Back to the CS 354 web page</a><br>
+</body>
+</html>

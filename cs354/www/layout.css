@@ -1,0 +1,311 @@
+/*
+   Colors
+   		Purdue Gold	
+   			#b1946c  &  #e0d5c5   (90734b)
+   		Accents & links
+   			#4C5A7C	#6C81B1 #CDDDFF #E6EEFF
+   		Accent greys
+   			#333  #666 
+*/
+body
+{
+	color: black;
+	background-color: white;
+	font-family: "Times New Roman", Times, serif;
+	font-size: medium;
+	min-width: 750px;
+	max-width: 1000px;
+}
+
+a
+{
+	background-color: inherit;
+	cursor: pointer;
+	color: #90734b;
+}
+
+a.no
+{
+	color: black;
+	background-color: inherit;
+}
+
+a:visited
+{
+	color: #6C81B1;
+	background-color: inherit;
+}
+
+a:hover { text-decoration: underline; }
+
+a:active
+{
+	color: #CDDDFF;
+	background-color: inherit;
+	text-decoration: underline;
+}
+
+.center
+{
+	text-align: center;
+	margin: auto;
+}
+
+strong
+{
+	font-style: oblique;
+	font-weight: bold;
+}
+
+address
+{
+	display: inline;
+	font-size: 90%;
+	font-style: oblique;
+	font-variant: normal;
+}
+
+hr
+{
+	margin: 1em auto 1em auto;
+	width: 70%;
+	height: 2pt;
+	background-color: black;
+	color: inherit;
+	display: block;
+}
+
+acronym
+{
+	text-transform: capitalize;
+	font-variant: small-caps;
+}
+
+.cursive { font-family: "Zapf Chancery", "Apple Chancery", cursive; }
+
+h1
+{
+	font: bold 1.2em Frutiger, Verdana, Arial, Helvetica, sans-serif;
+	text-transform: none;
+	color: black;
+	background-color: inherit;
+	float: left;
+	clear: left;
+	padding: 0;
+	vertical-align: middle;
+	margin: 1em 1em 1em .6em;
+	display: inline;
+	text-align: left;
+}
+
+h2
+{
+	font: oblique bold 1.1em Verdana, Arial, Helvetica, sans-serif;
+	text-align: center;
+	text-transform: none;
+	color: black;
+	padding: .5em 0 .5em 0;
+	background-color: #b1946c;
+	border: black thin ridge;
+	margin: 2em auto .5em auto;
+}
+
+h3
+{
+	font: normal bold 90%/1em Verdana, Arial, Helvetica, sans-serif;
+	text-indent: -1em;
+	text-align: left;
+	text-transform: none;
+	vertical-align: bottom;
+	margin: 0ex;
+	display: block;
+	padding: 1em 0ex .4em 0ex;
+}
+
+blockquote
+{
+	margin: .5em auto .5em auto;
+	width: 80%;
+	color: #666;
+	background-color: inherit;
+	text-align: justify;
+	text-transform: inherit;
+	font-size: 1em;
+	display: block;
+}
+
+q
+{
+	color: #666;
+	background-color: inherit;
+	text-transform: inherit;
+	font-size: 1em;
+	font-style: italic;
+}
+
+img
+{
+	border: 0;
+	display: inline;
+	padding: 10px;
+	margin: 0;
+	vertical-align: middle;
+}
+
+img.left
+{
+	float: left;
+	clear: left;
+}
+
+img.right
+{
+	float: right;
+	clear: right;
+}
+
+img.logo, .dots
+{
+	margin: 30px auto;
+	padding: 0;
+	clear: both;
+	vertical-align: middle;
+}
+
+p.dots
+{
+	color: #e0d5c5;
+	background-color: inherit;
+	font-size: 125%;
+	text-align: center;
+	font-weight: bold;
+}
+
+.bullet
+{
+	list-style-type: disc;
+	list-style-position: outside;
+	margin: .6em 0 .6em 2.5em;
+}
+
+.box
+{
+	list-style-type: square;
+	list-style-position: inside;
+	margin: .6em 0 .6em 1.5em;
+}
+
+ol
+{
+	list-style-type: decimal;
+	list-style-position: inside;
+}
+
+
+p+p { padding-top: 1em; }
+h2+p { padding-top: 1em; }
+.both { clear: both; }
+li + li { margin: .5em 0 0 0; }
+.indent { margin: 0 0 0 2em; }
+
+#main
+{
+	background-color: #B1946C;
+	color: black;
+	padding: 0;
+	clear: both;
+	margin-top: 15px;
+	border-color: black;
+	border-width: medium 0 0 0;
+	border-style: solid;
+	display: block;
+}
+
+#headinfo
+{
+        clear: both;
+	background-color: white;
+	color: black;
+	margin: 0 0 0 250px;
+	padding: 1em 2em;
+	font-family: "Times New Roman", Times, serif;
+}
+
+#leftside
+{
+	float: left;
+	text-align: left;
+	width: 250px;
+	margin: 0 10px 0 10px;
+}
+
+#leftside h3 
+{
+        display: inherit;
+        width: 230px;
+        margin: 1em 0 0 0;
+        padding: 0 0;
+        text-indent: 0;
+}
+
+#leftside p 
+{
+        width: 230px;
+        margin: 1em 0 0 0;
+        padding: 0 0;
+        border-top: 1px dashed black;
+}
+
+#info
+{
+	background-color: white;
+	color: black;
+	margin: 0 0 0 250px;
+	border-color: #B1946C;
+	border-width: 0 12px 0 0;
+	border-style: none solid none none;
+	padding: 1em 2em;
+	font-family: "Times New Roman", Times, serif;
+}
+
+#bottom
+{
+	background-color: #b1946c;
+	clear: both;
+	color: black;
+	padding: .5em 2em;
+	font: 75% "Times New Roman", Times, serif;
+	border-color: black;
+	border-width: medium 0 0 0;
+	border-style: solid;
+}
+
+#bottom a
+{
+        color: black;
+}
+
+#footleft
+{
+	float: left;
+	text-align: left;
+	width: 20%;
+	vertical-align: middle;
+	margin: 10px 0 10px 0;
+}
+
+#footmid
+{
+	margin: auto;
+	vertical-align: middle;
+	text-align: center;
+}
+
+#footright
+{
+	float: right;
+	text-align: right;
+	width: 20%;
+	vertical-align: middle;
+	margin: 10px 0 10px 0;
+}
