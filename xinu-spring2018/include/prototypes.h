@@ -1,4 +1,3 @@
-extern process	main1();
 
 
 extern void onandon();
