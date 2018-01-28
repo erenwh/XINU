@@ -1,7 +1,9 @@
-#include <xinu.h>
-
-int newProcess(const char* filename) {
-
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+int newProcess(const char *filename) {
     pid_t pid;
     int status;
     char *newargv[] = { filename, NULL }; // new argument array
