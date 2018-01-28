@@ -6,7 +6,7 @@
 int newProcess(const char *filename) {
     pid_t pid;
     int status;
-    char *newargv[] = { filename, NULL }; // new argument array
+    char *newargv[] = {(char *) filename, NULL }; // new argument array
     char *newenviron[] = { NULL }; // new enviroment variable
 
     pid = fork();
