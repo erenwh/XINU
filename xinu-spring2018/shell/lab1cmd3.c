@@ -1,9 +1,9 @@
 /**
   * This is a added feature to my XINU
-  * It takes two integers and subtract them from each other
-  * The command has been assign into the cmd table using keywork "minus"
+  * It takes two integers and times them together/ multiplication
+  * The command has been assign into the cmd table using keywork "times"
   * TO use it, the correct format should be:"
-  * minus digitValue1 digitValue2"
+  * times digitValue1 digitValue2"
   * Any other input then digits will get prompt of the character that is not a digit,
   * and force to terminate the program.
   * Han Wang @ Purdue
@@ -13,10 +13,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-shellcmd lab1cmd2(int argc, char *argv[]) {
+shellcmd lab1cmd3(int argc, char *argv[]) {
     // check if argument number is correct
     if (argc != 3) {
-        printf("please use \"minus val1 val2 \"\n");
+        printf("please use \"times val1 val2 \"\n");
         return -1;
     }
 
@@ -69,8 +69,8 @@ shellcmd lab1cmd2(int argc, char *argv[]) {
     if (alegit == 1 && blegit == 1) {
         int32 a = atoi(argv[1]);
         int32 b = atoi(argv[2]);
-        int32 result = a - b;
-        printf("%d - %d = %d\n", a, b, result);
+        int32 result = a * b;
+        printf("%d * %d = %d\n", a, b, result);
     }
 
     

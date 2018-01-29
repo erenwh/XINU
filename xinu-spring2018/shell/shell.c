@@ -29,8 +29,10 @@ const	struct	cmdent	cmdtab[] = {
 	{"udpeserver",	FALSE,	xsh_udpeserver},
 	{"uptime",	FALSE,	xsh_uptime},
 	{"?",		FALSE,	xsh_help},
-	{"add",		FALSE,	lab1cmd}
-	{"minus",		FALSE,	lab1cmd2}
+	{"add",		FALSE,	lab1cmd},
+	{"minus",       FALSE,	lab1cmd2},
+	{"times",       FALSE,	lab1cmd3},
+	{"divided",     FALSE,	lab1cmd4}
 
 };
 

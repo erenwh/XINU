@@ -1,5 +1,3 @@
-/*  main.c  - main */
-
 #include <xinu.h>
 #include <stdio.h>
 
@@ -17,7 +15,6 @@ process	main(void)
 	kill(pid);// terminate onandon process
 	recvclr();//clear incoming msg and return if there's one waiting
 
-	/* Wait for shell to exit and recreate it */
 
 	while (TRUE) {
 		receive();
