@@ -1,3 +1,4 @@
+/*
 #include <xinu.h>
 #include <stdio.h>
 
@@ -25,3 +26,4 @@ process	main(void)
 	}
 	return OK;
 }
+*/
