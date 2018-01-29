@@ -5,10 +5,9 @@
 
 process	main(void)
 {
-	kprintf("\nHello World!\n");
-	kprintf("\nThis is Han Wang, PID: 0028451697, username:wang2786\n");
-	kprintf("\nThis is my custom version of the XINU machine.\n");
-	kprintf("\n...creating a shell\n");
+        // print my info
+	kprintf("\n(Wang, Han)\n");
+	kprintf("\nwang2786\n");
 	recvclr();
 	resume(create(shell, 8192, 50, "shell", 1, CONSOLE));
 

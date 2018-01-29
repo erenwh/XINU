@@ -1,3 +1,5 @@
+extern  shellcmd  lab1cmd       (int32, char *[]);
+
 /* in file xsh_argecho.c */
 extern	shellcmd  xsh_argecho	(int32, char *[]);
 
