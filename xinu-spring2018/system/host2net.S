@@ -6,5 +6,5 @@
   */
 
 long host2net(long x) {
-
+	//TODO
 }
