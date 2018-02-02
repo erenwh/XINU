@@ -6,5 +6,6 @@
   */
 
 long host2net(long x) {
-	//TODO
+    // long is 4 byte
+    // we want to convert from little endian to big endian
 }
