@@ -70,8 +70,8 @@ process	main(void)
         //attack 2048 byte 10
         resume(create(stackoverflowA, 2048, 10, "hacker", 0));
         //victim 2048 15
-        int victim_pid = create(stackoverflowB, 2048, 15, "victim",0);
-        resume(victim_pid);
+        vic_pid = create(stackoverflowB, 2048, 15, "victim",0);
+        resume(vic_pid);
         sleep(4);
 
         /*
