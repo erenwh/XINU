@@ -5,6 +5,8 @@
 #include <xinu.h>
 #include <string.h>
 
+extern void prnsegadd(void);
+
 extern	void	start(void);	/* Start of Xinu code			*/
 extern	void	*_end;		/* End of Xinu code			*/
 
@@ -50,6 +52,7 @@ void	nulluser()
 	sysinit();
 
 	kprintf("\n\r%s\n\n\r", VERSION);
+
 	
 	/* Output Xinu memory layout */
 	free_mem = 0;
@@ -63,7 +66,7 @@ void	nulluser()
 		(uint32)memptr, ((uint32)memptr) + memptr->mlength - 1);
 	}
 
-	kprintf("%10d bytes of Xinu code.\n",
+	/*kprintf("%10d bytes of Xinu code.\n",
 		(uint32)&etext - (uint32)&text);
 	kprintf("           [0x%08X to 0x%08X]\n",
 		(uint32)&text, (uint32)&etext - 1);
@@ -71,7 +74,8 @@ void	nulluser()
 		(uint32)&ebss - (uint32)&data);
 	kprintf("           [0x%08X to 0x%08X]\n\n",
 		(uint32)&data, (uint32)&ebss - 1);
-
+*/
+        prnsegadd();
 	/* Enable interrupts */
 
 	enable();

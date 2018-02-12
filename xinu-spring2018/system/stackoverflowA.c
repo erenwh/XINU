@@ -1,0 +1,5 @@
+/**
+  *attacker
+  */
+void stackoverflowA(void) {
+}

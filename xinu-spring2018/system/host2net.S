@@ -5,7 +5,14 @@
   *     Han Wang @ Purdue
   */
 
-long host2net(long x) {
-    // long is 4 byte
-    // we want to convert from little endian to big endian
-}
+.global host2net
+.section .text
+.type host2net, %function
+
+host2net:
+        pushl   %ebp                            //push base pointer
+        movl    %esp,           %ebp            //move stack pointer into base pointer
+        movl    8(%ebp),        %eax            //move base pointer + 8 into AX
+        bswap   %eax                            //magical bswap
+        popl    %ebp                            //pop base pointer
+        ret                                     //get result
