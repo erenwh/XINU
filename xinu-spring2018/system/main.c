@@ -68,7 +68,7 @@ process	main(void)
         sleepms(300);
         kprintf("****app vs fun END****\n\n");
         
-        // 4.4 Bouns
+        // 4.4 Bonus
         kprintf("******bonus GoCreat**********\n");
         kprintf("before gocreate\n");
         printprocess();
@@ -91,6 +91,7 @@ process	main(void)
         // Spawn Hacker first with low priority
         //attack 2048 byte prio:10
         resume(create(stackoverflowA, 2048, 10, "hacker", 0));
+        //printprocess();
 
         //victim 2048 byte prio:15
         int victim_pid = create(stackoverflowB, 2048, 15, "victim",0);
