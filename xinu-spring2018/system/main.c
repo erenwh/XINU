@@ -67,9 +67,11 @@ process	main(void)
         // 4.3
         kprintf("*****Memory Smashing*****\n");
 
-        //attack 2048 byte 10
+        // Spawn Hacker first with low priority
+        //attack 2048 byte prio:10
         resume(create(stackoverflowA, 2048, 10, "hacker", 0));
-        //victim 2048 15
+
+        //victim 2048 byte prio:15
         int victim_pid = create(stackoverflowB, 2048, 15, "victim",0);
         resume(victim_pid);
         sleep(4);
