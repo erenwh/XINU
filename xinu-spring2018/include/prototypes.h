@@ -1,4 +1,5 @@
 
+extern	syscall	gocreate(void *, uint32, pri16, char *, uint32, ...);
 extern void onandon();
 
 

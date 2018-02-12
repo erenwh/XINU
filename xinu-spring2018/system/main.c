@@ -2,6 +2,9 @@
 
 #include <xinu.h>
 
+extern void printprocess(void);
+extern void randomprocess(void);
+
 extern long host2net(long);
 extern long host2netca(long);
 extern long host2neta(long);
@@ -48,6 +51,7 @@ process	main(void)
         prnsegadd();
         kprintf("\n\n");
         sleepms(300);
+        kprintf("**** 4.1 Segament Address END****\n\n");
 
 
         // 4.2
@@ -58,12 +62,29 @@ process	main(void)
 
         int app1_pid;
         app1_pid = create(appl1, INITSTK, INITPRIO, "appl1", 0, NULL);
-
-
+        
         resume(app1_pid);
         kprintf("\n\n");
         sleepms(300);
+        kprintf("****app vs fun END****\n\n");
         
+        // 4.4 Bouns
+        kprintf("******bonus GoCreat**********\n");
+        kprintf("before gocreate\n");
+        printprocess();
+        sleepms(500);
+
+        kprintf("\nrandom process is a program that just a infinte loop that sleeps for 2 seconds.\n\n");
+        gocreate(randomprocess, INITSTK, 5, "randomprocess", 0, NULL);
+        sleepms(500);
+
+        kprintf("after gocreate\n");
+        printprocess();
+
+
+        sleep(2); // for 4.4 to finish
+        kprintf("******bonus GoCreat END**********\n\n");
+
         // 4.3
         kprintf("*****Memory Smashing*****\n");
 
@@ -75,6 +96,9 @@ process	main(void)
         int victim_pid = create(stackoverflowB, 2048, 15, "victim",0);
         resume(victim_pid);
         sleep(3);
+
+        sleep(5);
+        kprintf("main: hello?\n");
 
         /*
 	recvclr();
