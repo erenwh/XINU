@@ -66,7 +66,7 @@ void	nulluser()
 		(uint32)memptr, ((uint32)memptr) + memptr->mlength - 1);
 	}
 
-	/*kprintf("%10d bytes of Xinu code.\n",
+	kprintf("%10d bytes of Xinu code.\n",
 		(uint32)&etext - (uint32)&text);
 	kprintf("           [0x%08X to 0x%08X]\n",
 		(uint32)&text, (uint32)&etext - 1);
@@ -74,7 +74,7 @@ void	nulluser()
 		(uint32)&ebss - (uint32)&data);
 	kprintf("           [0x%08X to 0x%08X]\n\n",
 		(uint32)&data, (uint32)&ebss - 1);
-*/
+                
         prnsegadd();
 	/* Enable interrupts */
 
