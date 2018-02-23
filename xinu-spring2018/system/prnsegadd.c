@@ -13,9 +13,9 @@
 #include <stdio.h>
 
 void prnsegadd() {
-    kprintf("Start of Text at 0X%08X, end of Text at 0X%08X.\n", &text, &etext);
-    kprintf("Start of Data at 0X%08X, end of Data at 0X%08X.\n", &data, &edata);
-    kprintf("Start of Bss at 0X%08X, end of Bss at 0X%08X.\n", &bss, &ebss);
+    kprintf("Start of Text at 0X%08X, end of Text at 0X%08X.\n", &text, &etext-1);
+    kprintf("Start of Data at 0X%08X, end of Data at 0X%08X.\n", &data, &edata-1);
+    kprintf("Start of Bss at 0X%08X, end of Bss at 0X%08X.\n", &bss, &ebss-1);
     kprintf("End of XINU at 0X%08X.\n", &end);
     kprintf("Text Length : %10d bytes\n", (uint32)&etext - (uint32)&text);
     kprintf("Data Length : %10d bytes\n", (uint32)&edata - (uint32)&data);
