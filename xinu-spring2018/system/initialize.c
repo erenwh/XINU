@@ -75,7 +75,7 @@ void	nulluser()
 	kprintf("           [0x%08X to 0x%08X]\n\n",
 		(uint32)&data, (uint32)&ebss - 1);
                 
-        prnsegadd();
+//        prnsegadd();
 	/* Enable interrupts */
 
 	enable();

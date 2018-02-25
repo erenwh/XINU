@@ -52,6 +52,8 @@ pid32	create(
 	prptr->prsem = -1;
 	prptr->prparent = (pid32)getpid();
 	prptr->prhasmsg = FALSE;
+        prptr->prctxswbeg = 0;
+        prptr->prcputot = 1;            /* initialize cpu time tracker  */
 
 	/* Set up stdin, stdout, and stderr descriptors for the shell	*/
 	prptr->prdesc[0] = CONSOLE;

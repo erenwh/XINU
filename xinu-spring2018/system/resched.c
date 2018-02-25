@@ -13,6 +13,8 @@ void	resched(void)		/* Assumes interrupts are disabled	*/
 	struct procent *ptold;	/* Ptr to table entry for old process	*/
 	struct procent *ptnew;	/* Ptr to table entry for new process	*/
 
+        
+
 	/* If rescheduling is deferred, record attempt and return */
 
 	if (Defer.ndefers > 0) {
@@ -20,14 +22,23 @@ void	resched(void)		/* Assumes interrupts are disabled	*/
 		return;
 	}
 
+
 	/* Point to process table entry for the current (old) process */
 
 	ptold = &proctab[currpid];
+
+        // Han: get the time for cpu usage if process is not new
+        ptold->prcputot = clkmilli - ptold->prctxswbeg + ptold->prcputot;
+        ptold->prctxswbeg = clkmilli;
+
+
+
 
 	if (ptold->prstate == PR_CURR) {  /* Process remains eligible */
 		if (ptold->prprio > firstkey(readylist)) {
 			return;
 		}
+
 
 		/* Old process will no longer remain current */
 
@@ -41,8 +52,14 @@ void	resched(void)		/* Assumes interrupts are disabled	*/
 	ptnew = &proctab[currpid];
 	ptnew->prstate = PR_CURR;
 	preempt = QUANTUM;		/* Reset time slice for process	*/
-	ctxsw(&ptold->prstkptr, &ptnew->prstkptr);
 
+        // new process store the time stamp
+        ptnew->prctxswbeg = clkmilli;
+
+
+        
+
+	ctxsw(&ptold->prstkptr, &ptnew->prstkptr);
 	/* Old process returns here when resumed */
 
 	return;

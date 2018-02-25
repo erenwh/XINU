@@ -1,7 +1,7 @@
 /* clkinit.c - clkinit (x86) */
 
 #include <xinu.h>
-
+uint32  clkmilli;               /* milliseconds since boot              */
 uint32	clktime;		/* Seconds since boot			*/
 uint32	ctr1000 = 0;		/* Milliseconds since boot		*/
 qid16	sleepq;			/* Queue of sleeping processes		*/
@@ -26,6 +26,10 @@ void	clkinit(void)
 	/* Initialize the time since boot to zero */
 
 	clktime = 0;
+
+	/* Initialize the time in milliseconds since boot to zero */
+
+	clkmilli = 0;
 
 	/* Set interrupt vector for the clock to invoke clkdisp */
 
