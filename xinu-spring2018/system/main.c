@@ -13,7 +13,7 @@ process	main(void)
 
         lab3q3t1();
 
-//        lab3q3t2();
+        lab3q3t2();
 
         /*
 	recvclr();
