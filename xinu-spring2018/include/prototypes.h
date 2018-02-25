@@ -1,4 +1,9 @@
-
+extern void lab3q3t2(void);
+extern void lab3q3t1(void);
+extern syscall getcputot(pid32);
+extern void printprocess(void);
+extern void test2(void);
+extern void test(void);
 extern	syscall	gocreate(void *, uint32, pri16, char *, uint32, ...);
 extern void onandon();
 
