@@ -44,7 +44,7 @@ pid32	create(
 	/* Initialize process table entry for new process */
 	prptr->prstate = PR_SUSP;	/* Initial state is suspended	*/
 	//prptr->prprio = priority;
-    prptr->prprio = MAXPRIO - 1;
+    prptr->prprio = MAXPRIO - 1;    /*Han Wang: initial prprio for Q4*/
 	prptr->prstkbase = (char *)saddr;
 	prptr->prstklen = ssize;
 	prptr->prname[PNMLEN-1] = NULLCH;
@@ -53,7 +53,7 @@ pid32	create(
 	prptr->prsem = -1;
 	prptr->prparent = (pid32)getpid();
 	prptr->prhasmsg = FALSE;
-        prptr->prcputot = 1;            /* initialize cpu time tracker  */
+        prptr->prcputot = 1;            /* Han Wang:initialize cpu time tracker  */
 
 	/* Set up stdin, stdout, and stderr descriptors for the shell	*/
 	prptr->prdesc[0] = CONSOLE;

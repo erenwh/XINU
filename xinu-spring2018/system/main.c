@@ -3,9 +3,11 @@
 #include <xinu.h>
 
 
+//#define Q3_T1
+//#define Q3_T2
 #define Q4_5CPU
-//#define Q4_5IO
-//#define Q4_3CPU3IO
+#define Q4_5IO
+#define Q4_3CPU3IO
 
 process	main(void)
 {
@@ -13,9 +15,13 @@ process	main(void)
     kprintf("\n(Wang, Han)\n");
     kprintf("\nwang2786\n");
     kprintf("\n\n");
-    
-    //        lab3q3t1();
-    //        lab3q3t2();
+#ifdef Q3_T1
+    lab3q3t1();
+#endif
+
+#ifdef Q3_T2
+    lab3q3t2();
+#endif
     
 #ifdef Q4_5CPU
     kprintf("Test for Q4_5CPU begins\n");

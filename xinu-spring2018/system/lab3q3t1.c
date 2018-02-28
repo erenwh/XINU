@@ -12,10 +12,10 @@ void lab3q3t1() {
         kprintf("\n\n%s(%d):\nprcputot:%d;clkmilli:%d,prctxswbeg:%d\n",curr->prname, currpid,prcputot,clkmilli,curr->prctxswbeg);
         restore(mask);
 #endif*/
-        resume(create(test, 1024, 20, "test1",0));
-        resume(create(test, 1024, 20, "test2",0));
-        resume(create(test, 1024, 20, "test3",0));
-        resume(create(test, 1024, 20, "test4",0));
+        resume(create(test, 1024, 20, "test1.1",0));
+        resume(create(test, 1024, 20, "test1.2",0));
+        resume(create(test, 1024, 20, "test1.3",0));
+        resume(create(test, 1024, 20, "test1.4",0));
         sleep(10);
 //        printprocess();
         kprintf("\nEnd of Test3.1\n");

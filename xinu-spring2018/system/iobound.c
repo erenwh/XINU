@@ -16,18 +16,16 @@ void iobound() {
 #ifdef  DEBUG
             int cputime = getcputot(pid);
             intmask mask = disable();
-            kprintf("(%d):, outer i: %d, Prio: %d, Preempt: %d,cputot:%d\n", pid, i, curr->prprio, preempt, cputime);
+            kprintf("IO(%d):, outer i: %d, Prio: %d, Preempt: %d,cputot:%d\n", pid, i, curr->prprio, preempt, cputime);
             restore(mask);
 #endif
         }
-
-
         
     }
 #ifdef  DEBUG
     int cputime = getcputot(pid);
     intmask mask = disable();
-    kprintf("Process Finished(%d): prcputot:%d, prprio:%d, preempt:%d\n", pid, cputime, curr->prprio, preempt);
+    kprintf("IOProcess Finished(%d): prcputot:%d, prprio:%d, preempt:%d\n", pid, cputime, curr->prprio, preempt);
     restore(mask);
 #endif
     return;

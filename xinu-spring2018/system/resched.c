@@ -27,42 +27,43 @@ void	resched(void)		/* Assumes interrupts are disabled	*/
     
     ptold = &proctab[currpid];
     
-    // fix the null process
+    /* Han Wang: handle null process */
     if (currpid == 0) {
         ptold->prprio = 0;
     }
     if (ptold->prstate == PR_CURR) {  /* Process remains eligible */
         if (ptold->prprio > firstkey(readylist)) {
-            
-            if(currpid != 0) {
-                ptold->prcputot += clkmilli - prctxswbeg;
-                pri16 priocheck = ptold->prprio - ptold->prcputot;
-                //check for prio not 0
+            if(currpid != 0) { /*Han Wang:if current process has a higher prority then first in waiting queue, */
+                ptold->prcputot += clkmilli - prctxswbeg;/*Han Wang:update its cpu total time using time stamp*/
+                pri16 priocheck = ptold->prprio - ptold->prcputot;/*Han Wang:and do priority check for both ends*/
+                //Han Wang:check for prio not 0
                 if (priocheck < 1) {
-                    priocheck = 1; // set it to smallest possible
-                } else if( priocheck >= MAXPRIO) { // if its bigger than limit
-                    priocheck = MAXPRIO - 1; //set it to max
+                    priocheck = 1; // Han Wang:set it to smallest possible
+                } else if( priocheck >= MAXPRIO) { // Han Wang:if its bigger than limit
+                    priocheck = MAXPRIO - 1; //Han Wang:set it to max
                 }
-                //store it back to old
+                //Han Wang:store it back to old
                 ptold->prprio = priocheck;
-                
+                //Han Wang:increase other waiting process so that avoid all process being priority 1 
                 IncreasePrio();
-            } else { // null process stays 0, sanity check
+            } else { //Han Wang: null process stays 0, sanity check
                 ptold->prprio = 0;
+                //Han Wang:increase other waiting process so that avoid all process being priority 1 
                 IncreasePrio();
             }
-            prctxswbeg = clkmilli;
+            prctxswbeg = clkmilli;/*Han Wang: update timestamp for next time use */
             return;
         }
         
+        /* Han Wang:if current process isnt higher, update the total time used and set it into the readylist */
         if (currpid != 0) {
             ptold->prcputot += clkmilli - prctxswbeg;
         }
         /* Old process will no longer remain current */
         
         ptold->prstate = PR_READY;
-        insert(currpid, readylist, ptold->prprio);
-    } else {
+        insert(currpid, readylist, ptold->prprio - ptold->prcputot);
+    } else {//Han Wang: if pt->old isnt in CURR state, reset the cpu total
         if (currpid != 0) {
             ptold->prcputot += clkmilli - prctxswbeg;
         }
@@ -78,7 +79,7 @@ void	resched(void)		/* Assumes interrupts are disabled	*/
     
     
     ctxsw(&ptold->prstkptr, &ptnew->prstkptr);
-    // new process store the time stamp
+    //Han Wang: new process store the time stamp
     prctxswbeg = clkmilli;
     /* Old process returns here when resumed */
     
