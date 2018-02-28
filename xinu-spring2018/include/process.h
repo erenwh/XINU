@@ -6,6 +6,8 @@
 #define	NPROC		8
 #endif		
 
+#define MAXPRIO         32767
+
 /* Process state constants */
 
 #define	PR_FREE		0	/* Process table entry is unused	*/
@@ -53,7 +55,7 @@ struct procent {		/* Entry in the process table		*/
 	bool8	prhasmsg;	/* Nonzero iff msg is valid		*/
 	int16	prdesc[NDESC];	/* Device descriptors for process	*/
         uint32  prcputot;       /* keep track of CPU time used by Proc  */
-        uint32  prctxswbeg;     /* keep track of context switch time    */
+//        uint32  prctxswbeg;     /* keep track of context switch time    */
 };
 
 /* Marker for the top of a process stack (used to help detect overflow)	*/

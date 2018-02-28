@@ -10,59 +10,79 @@ struct	defer	Defer;
  */
 void	resched(void)		/* Assumes interrupts are disabled	*/
 {
-	struct procent *ptold;	/* Ptr to table entry for old process	*/
-	struct procent *ptnew;	/* Ptr to table entry for new process	*/
-
+    struct procent *ptold;	/* Ptr to table entry for old process	*/
+    struct procent *ptnew;	/* Ptr to table entry for new process	*/
+    
+    
+    
+    /* If rescheduling is deferred, record attempt and return */
+    
+    if (Defer.ndefers > 0) {
+        Defer.attempt = TRUE;
+        return;
+    }
+    
+    
+    /* Point to process table entry for the current (old) process */
+    
+    ptold = &proctab[currpid];
+    
+    // fix the null process
+    if (currpid == 0) {
+        ptold->prprio = 0;
+    }
+    if (ptold->prstate == PR_CURR) {  /* Process remains eligible */
+        if (ptold->prprio > firstkey(readylist)) {
+            
+            if(currpid != 0) {
+                ptold->prcputot += clkmilli - prctxswbeg;
+                pri16 priocheck = ptold->prprio - ptold->prcputot;
+                //check for prio not 0
+                if (priocheck < 1) {
+                    priocheck = 1; // set it to smallest possible
+                } else if( priocheck >= MAXPRIO) { // if its bigger than limit
+                    priocheck = MAXPRIO - 1; //set it to max
+                }
+                //store it back to old
+                ptold->prprio = priocheck;
+                
+                IncreasePrio();
+            } else { // null process stays 0, sanity check
+                ptold->prprio = 0;
+                IncreasePrio();
+            }
+            prctxswbeg = clkmilli;
+            return;
+        }
         
-
-	/* If rescheduling is deferred, record attempt and return */
-
-	if (Defer.ndefers > 0) {
-		Defer.attempt = TRUE;
-		return;
-	}
-
-
-	/* Point to process table entry for the current (old) process */
-
-	ptold = &proctab[currpid];
-
-        // Han: get the time for cpu usage if process is not new
-        ptold->prcputot = clkmilli - ptold->prctxswbeg + ptold->prcputot;
-        ptold->prctxswbeg = clkmilli;
-
-
-
-
-	if (ptold->prstate == PR_CURR) {  /* Process remains eligible */
-		if (ptold->prprio > firstkey(readylist)) {
-			return;
-		}
-
-
-		/* Old process will no longer remain current */
-
-		ptold->prstate = PR_READY;
-		insert(currpid, readylist, ptold->prprio);
-	}
-
-	/* Force context switch to highest priority ready process */
-
-	currpid = dequeue(readylist);
-	ptnew = &proctab[currpid];
-	ptnew->prstate = PR_CURR;
-	preempt = QUANTUM;		/* Reset time slice for process	*/
-
-        // new process store the time stamp
-        ptnew->prctxswbeg = clkmilli;
-
-
+        if (currpid != 0) {
+            ptold->prcputot += clkmilli - prctxswbeg;
+        }
+        /* Old process will no longer remain current */
         
-
-	ctxsw(&ptold->prstkptr, &ptnew->prstkptr);
-	/* Old process returns here when resumed */
-
-	return;
+        ptold->prstate = PR_READY;
+        insert(currpid, readylist, ptold->prprio);
+    } else {
+        if (currpid != 0) {
+            ptold->prcputot += clkmilli - prctxswbeg;
+        }
+    }
+    
+    /* Force context switch to highest priority ready process */
+    
+    currpid = dequeue(readylist);
+    ptnew = &proctab[currpid];
+    ptnew->prstate = PR_CURR;
+    preempt = QUANTUM;		/* Reset time slice for process	*/
+    
+    
+    
+    ctxsw(&ptold->prstkptr, &ptnew->prstkptr);
+    // new process store the time stamp
+    prctxswbeg = clkmilli;
+    /* Old process returns here when resumed */
+    
+    return;
 }
 
 /*------------------------------------------------------------------------
@@ -70,28 +90,28 @@ void	resched(void)		/* Assumes interrupts are disabled	*/
  *------------------------------------------------------------------------
  */
 status	resched_cntl(		/* Assumes interrupts are disabled	*/
-	  int32	defer		/* Either DEFER_START or DEFER_STOP	*/
-	)
+                     int32	defer		/* Either DEFER_START or DEFER_STOP	*/
+)
 {
-	switch (defer) {
-
-	    case DEFER_START:	/* Handle a deferral request */
-
-		if (Defer.ndefers++ == 0) {
-			Defer.attempt = FALSE;
-		}
-		return OK;
-
-	    case DEFER_STOP:	/* Handle end of deferral */
-		if (Defer.ndefers <= 0) {
-			return SYSERR;
-		}
-		if ( (--Defer.ndefers == 0) && Defer.attempt ) {
-			resched();
-		}
-		return OK;
-
-	    default:
-		return SYSERR;
-	}
+    switch (defer) {
+            
+        case DEFER_START:	/* Handle a deferral request */
+            
+            if (Defer.ndefers++ == 0) {
+                Defer.attempt = FALSE;
+            }
+            return OK;
+            
+        case DEFER_STOP:	/* Handle end of deferral */
+            if (Defer.ndefers <= 0) {
+                return SYSERR;
+            }
+            if ( (--Defer.ndefers == 0) && Defer.attempt ) {
+                resched();
+            }
+            return OK;
+            
+        default:
+            return SYSERR;
+    }
 }

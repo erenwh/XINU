@@ -1,3 +1,6 @@
+extern void iobound(void);
+extern void cpubound(void);
+extern void IncreasePrio(void);
 extern void lab3q3t2(void);
 extern void lab3q3t1(void);
 extern syscall getcputot(pid32);
