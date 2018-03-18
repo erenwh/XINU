@@ -23,6 +23,11 @@ struct	procent	proctab[NPROC];	/* Process table			*/
 struct	sentry	semtab[NSEM];	/* Semaphore table			*/
 struct	memblk	memlist;	/* List of free memory blocks		*/
 
+/* lab 4(Han Wang): struct */
+struct	xts_tab	xts_conf[MAXSIZE]; /* table of priorities */
+struct	xts_multifb	xts_ready[MAXSIZE];
+
+
 /* Active system status */
 
 int	prcount;		/* Total number of live processes	*/
@@ -163,9 +168,56 @@ static	void	sysinit()
 
 	bufinit();
 
+	/* lab4(Han Wang): init TS scheduler */
+	for (i = 0; i < MAXSIZE; i++) {
+		if (i < 10) {
+			xts_conf[i].xts_quantum = 200;
+			xts_conf[i].xts_tqexp = 0;
+			xts_conf[i].xts_slpret = 50;
+		} else {
+			xts_conf[i].xts_tqexp = i - 10;
+			if (i < 20) {
+				xts_conf[i].xts_quantum = 160;
+				xts_conf[i].xts_slpret = 51;
+			} else if (i < 30) {
+				xts_conf[i].xts_quantum = 120;
+				xts_conf[i].xts_slpret = 52;
+			} else if (i < 40) {
+				xts_conf[i].xts_quantum = 80;
+				if (i < 35) {
+					xts_conf[i].xts_slpret = 53;
+				} else {
+					xts_conf[i].xts_slpret = 54;
+				}
+			} else if (i < 59) {
+				xts_conf[i].xts_quantum = 40;
+				if (i < 45) {
+					xts_conf[i].xts_slpret = 55;
+				} else if (i == 45) {
+					xts_conf[i].xts_slpret = 56;
+				} else if (i == 46) {
+					xts_conf[i].xts_slpret = 57;
+				} else {
+					xts_conf[i].xts_slpret = 58;
+				}
+			} else {
+				xts_conf[i].xts_quantum = 20;
+				xts_conf[i].xts_slpret = 59;
+			}
+			
+		}
+	}
+
 	/* Create a ready list for processes */
 
-	readylist = newqueue();
+	//readylist = newqueue();
+
+	/* lab4(Han Wang): init xts table and array */
+	for (int i = 0; i < MAXSIZE; i++) {
+		xts_ready[i].status = 0;
+		xts_ready[i].queue_head = newqueue();
+		
+	}
 
 	/* Initialize the real time clock */
 

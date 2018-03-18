@@ -22,7 +22,8 @@ status	ready(
 
 	prptr = &proctab[pid];
 	prptr->prstate = PR_READY;
-	insert(pid, readylist, prptr->prprio);
+	//insert(pid, readylist, prptr->prprio);
+	xts_enqueue(pid, prptr->prprio);;
 	resched();
 
 	return OK;

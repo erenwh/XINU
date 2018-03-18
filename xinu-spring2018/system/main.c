@@ -5,8 +5,8 @@
 
 //#define Q3_T1
 //#define Q3_T2
-#define Q4_5CPU
-#define Q4_5IO
+//#define Q4_5CPU
+//#define Q4_5IO
 #define Q4_3CPU3IO
 
 process	main(void)
