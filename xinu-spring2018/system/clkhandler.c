@@ -8,17 +8,7 @@
  */
 void	clkhandler()
 {
-
-    /* Han Wang's implementation of clkmilli    */
-//    static uint32 count1 = 1;                   /* count to 1ms*/
-    // Decrease ms counter and see if a millisecond has passed
-//    if ((--count1) <= 0) {
-        clkmilli++; // one millisecond passed
-//        count1 = 1; // reset local for the next millsecond
-//    }
-
 	static	uint32	count1000 = 1000;	/* Count to 1000 ms	*/
-
 
 	/* Decrement the ms counter, and see if a second has passed */
 

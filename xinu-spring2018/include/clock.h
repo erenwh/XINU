@@ -10,8 +10,6 @@
 #define CLKTICKS_PER_SEC  1000	/* clock timer resolution		*/
 
 extern	uint32	clktime;	/* current time in secs since boot	*/
-extern  uint32  clkmilli;       /* Total time elapsed in millisecond    */
 
 extern	qid16	sleepq;		/* queue for sleeping processes		*/
 extern	uint32	preempt;	/* preemption counter			*/
-extern  uint32  prctxswbeg;     /* Han Wang: Globle variable for recording context switch timestamp */
