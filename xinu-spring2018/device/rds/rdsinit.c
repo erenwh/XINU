@@ -93,7 +93,7 @@ devcall	rdsinit (
 
 	/* Create a communication process */
 
-	rdptr->rd_comproc = create(rdsprocess, RD_STACK, 59,
+	rdptr->rd_comproc = create(rdsprocess, RD_STACK, RD_PRIO,
 						"rdsproc", 1, rdptr);
 
 	if (rdptr->rd_comproc == SYSERR) {

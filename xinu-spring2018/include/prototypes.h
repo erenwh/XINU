@@ -1,7 +1,3 @@
-extern qid16 xts_newqueue(void);
-extern int xts_enqueue(pid32, pri16);
-extern pid32 xts_dequeue(void);
-extern pri16 xts_priochk(void);
 extern void iobound(void);
 extern void cpubound(void);
 extern void IncreasePrio(void);

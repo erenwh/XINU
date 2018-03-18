@@ -5,9 +5,9 @@
 
 //#define Q3_T1
 //#define Q3_T2
-//#define Q4_5CPU
-//#define Q4_5IO
-//#define Q4_3CPU3IO
+#define Q4_5CPU
+#define Q4_5IO
+#define Q4_3CPU3IO
 
 process	main(void)
 {
@@ -54,7 +54,7 @@ process	main(void)
     receive();receive();receive();receive();receive();receive();
 #endif
 
-    
+    /*
      recvclr();
      resume(create(shell, 8192, 50, "shell", 1, CONSOLE));
      
@@ -64,6 +64,6 @@ process	main(void)
      sleepms(200);
      kprintf("\n\nMain process recreating shell\n\n");
      resume(create(shell, 4096, 20, "shell", 1, CONSOLE));
-     }
+     }*/
     return OK;
 }
