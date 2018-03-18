@@ -10,28 +10,27 @@
  * 
  */
 
-int xts_enqueue(pid32 pid,  /* pid of process */
-                pri16 prio  /* process's priority */
-                ) {
+int xts_enqueue(pid32 pid, /* pid of process */
+				pri16 prio /* process's priority */
+)
+{
 
-	qid16 q = xts_ready[prio].queue_head;	
-        int tail, prev;		/* Tail & previous node indexes	*/
+	qid16 q = queueArr[prio];
+	int tail, prev; /* Tail & previous node indexes	*/
 
-	if (isbadqid(q) || isbadpid(pid)) {
+	if (isbadqid(q) || isbadpid(pid))
+	{
 		return -1;
 	}
 
 	tail = queuetail(q);
 	prev = queuetab[tail].qprev;
 
-	queuetab[pid].qnext  = tail;	/* Insert just before tail node	*/
-	queuetab[pid].qprev  = prev;
+	queuetab[pid].qnext = tail; /* Insert just before tail node	*/
+	queuetab[pid].qprev = prev;
 	queuetab[prev].qnext = pid;
 	queuetab[tail].qprev = pid;
 
 	xts_ready[prio].status = 1;
 	return 0;
-    
 }
-
-

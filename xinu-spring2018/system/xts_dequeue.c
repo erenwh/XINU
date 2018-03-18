@@ -10,11 +10,14 @@
  * 
  */
 
-pid32 xts_dequeue(void) {
+pid32 xts_dequeue(void)
+{
 	pid32 pid = 0;
-	for (int i = 59; i >= 0; i++) {
-		qid16 q = xts_ready[i].queue_head;
-		if (xts_ready[i].status == 1) {
+	for (int i = 59; i >= 0; i++)
+	{
+		qid16 q = queueArr[i];
+		if (!isempty(q))
+		{
 			pid = getfirst(q);
 			queuetab[pid].qprev = EMPTY;
 			queuetab[pid].qnext = EMPTY;

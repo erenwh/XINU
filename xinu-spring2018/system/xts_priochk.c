@@ -10,9 +10,12 @@
  * 
  */
 
-pri16 xts_priochk(void) {
-    for (int i = 59; i >= 0; i--) {
-        if (xts_ready[i].status == 1) {
+pri16 xts_priochk(void)
+{
+    for (int i = 59; i >= 0; i--)
+    {
+        if (!isempty(queueArr[i]))
+        {
             return i;
         }
     }
