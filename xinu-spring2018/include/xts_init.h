@@ -14,3 +14,4 @@ struct xts_multifb
       qid16 queue_tail; // index to tail of queue
 };
 extern struct xts_multifb xts_ready[];
+

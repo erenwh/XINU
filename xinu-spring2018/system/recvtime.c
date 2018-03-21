@@ -28,6 +28,7 @@ umsg32	recvtime(
 			return SYSERR;
 		}
 		prptr->prstate = PR_RECTIM;
+		//prptr->prbool = FALSE;
 		resched();
 	}
 

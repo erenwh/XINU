@@ -14,7 +14,7 @@ pri16 xts_priochk(void)
 {
     for (int i = 59; i >= 0; i--)
     {
-        if (!isempty(xts_ready[i].queue_head))
+        if (xts_ready[i].status == 1)
         {
             return i;
         }

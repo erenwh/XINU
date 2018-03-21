@@ -6,11 +6,12 @@
  *  yield  -  Voluntarily relinquish the CPU (end a timeslice)
  *------------------------------------------------------------------------
  */
-syscall	yield(void)
+syscall yield(void)
 {
-	intmask	mask;			/* Saved interrupt mask		*/
+	intmask mask; /* Saved interrupt mask		*/
 
 	mask = disable();
+	//proctab[currpid].prbool = FALSE;
 	resched();
 	restore(mask);
 	return OK;

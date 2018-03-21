@@ -15,10 +15,11 @@ pid32	enqueue(
 {
 	int	tail, prev;		/* Tail & previous node indexes	*/
 
+//kprintf("enqueue:qid:%d, pid:%d\n", q,pid);
 	if (isbadqid(q) || isbadpid(pid)) {
 		return SYSERR;
 	}
-
+	
 	tail = queuetail(q);
 	prev = queuetab[tail].qprev;
 

@@ -2,20 +2,21 @@
 
 #include <xinu.h>
 
-#define	MAXSECONDS	4294967		/* Max seconds per 32-bit msec	*/
+#define MAXSECONDS 4294967 /* Max seconds per 32-bit msec	*/
 
 /*------------------------------------------------------------------------
  *  sleep  -  Delay the calling process n seconds
  *------------------------------------------------------------------------
  */
-syscall	sleep(
-	  uint32	delay		/* Time to delay in seconds	*/
-	)
+syscall sleep(
+	uint32 delay /* Time to delay in seconds	*/
+)
 {
-	if (delay > MAXSECONDS) {
+	if (delay > MAXSECONDS)
+	{
 		return SYSERR;
 	}
-	sleepms(1000*delay);
+	sleepms(1000 * delay);
 	return OK;
 }
 
@@ -23,14 +24,15 @@ syscall	sleep(
  *  sleepms  -  Delay the calling process n milliseconds
  *------------------------------------------------------------------------
  */
-syscall	sleepms(
-	  uint32	delay		/* Time to delay in msec.	*/
-	)
+syscall sleepms(
+	uint32 delay /* Time to delay in msec.	*/
+)
 {
-	intmask	mask;			/* Saved interrupt mask		*/
+	intmask mask; /* Saved interrupt mask		*/
 
 	mask = disable();
-	if (delay == 0) {
+	if (delay == 0)
+	{
 		yield();
 		restore(mask);
 		return OK;
@@ -38,12 +40,13 @@ syscall	sleepms(
 
 	/* Delay calling process */
 
-	if (insertd(currpid, sleepq, delay) == SYSERR) {
+	if (insertd(currpid, sleepq, delay) == SYSERR)
+	{
 		restore(mask);
 		return SYSERR;
 	}
-
 	proctab[currpid].prstate = PR_SLEEP;
+	//proctab[currpid].prbool = FALSE;
 	resched();
 	restore(mask);
 	return OK;

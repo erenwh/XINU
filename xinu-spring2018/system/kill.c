@@ -34,6 +34,7 @@ syscall	kill(
 	switch (prptr->prstate) {
 	case PR_CURR:
 		prptr->prstate = PR_FREE;	/* Suicide */
+		//prptr->prbool = FALSE;
 		resched();
 
 	case PR_SLEEP:

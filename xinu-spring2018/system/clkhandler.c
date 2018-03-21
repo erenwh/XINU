@@ -6,23 +6,24 @@
  * clkhandler - high level clock interrupt handler
  *------------------------------------------------------------------------
  */
-void	clkhandler()
+void clkhandler()
 {
 
-    /* Han Wang's implementation of clkmilli    */
-//    static uint32 count1 = 1;                   /* count to 1ms*/
-    // Decrease ms counter and see if a millisecond has passed
-//    if ((--count1) <= 0) {
-        clkmilli++; // one millisecond passed
-//        count1 = 1; // reset local for the next millsecond
-//    }
+	/* Han Wang's implementation of clkmilli    */
+	//    static uint32 count1 = 1;                   /* count to 1ms*/
+	// Decrease ms counter and see if a millisecond has passed
+	//    if ((--count1) <= 0) {
+	clkmilli++; // one millisecond passed
+				//        count1 = 1; // reset local for the next millsecond
+				//    }
 
-	static	uint32	count1000 = 1000;	/* Count to 1000 ms	*/
-
+	static uint32 count1000 = 1000; /* Count to 1000 ms	*/
+	//struct procent *proc = &proctab[currpid];
 
 	/* Decrement the ms counter, and see if a second has passed */
 
-	if((--count1000) <= 0) {
+	if ((--count1000) <= 0)
+	{
 
 		/* One second has passed, so increment seconds count */
 
@@ -35,12 +36,14 @@ void	clkhandler()
 
 	/* Handle sleeping processes if any exist */
 
-	if(!isempty(sleepq)) {
+	if (!isempty(sleepq))
+	{
 
 		/* Decrement the delay for the first process on the	*/
 		/*   sleep queue, and awaken if the count reaches zero	*/
 
-		if((--queuetab[firstid(sleepq)].qkey) <= 0) {
+		if ((--queuetab[firstid(sleepq)].qkey) <= 0)
+		{
 			wakeup();
 		}
 	}
@@ -48,8 +51,10 @@ void	clkhandler()
 	/* Decrement the preemption counter, and reschedule when the */
 	/*   remaining time reaches zero			     */
 
-	if((--preempt) <= 0) {
-		preempt = QUANTUM;
+	if ((--preempt) <= 0)
+	{
+		//preempt = QUANTUM;
+		//proctab[currpid].prbool = TRUE;
 		resched();
 	}
 }

@@ -16,7 +16,12 @@ int xts_enqueue(pid32 pid, /* pid of process */
 {
 
 	qid16 q = xts_ready[prio].queue_head;
-	enqueue(pid, q); //if (enqueue(pid, q) == SYSERR) return -1;
-	xts_ready[prio].status = 1;
+	
+	
+	if (enqueue(pid, q) == SYSERR) {
+		//kprintf("enqueue error\n");
+		return -1;
+	}
+	xts_ready[prio].status = 1; // set status to not empty
 	return 0;
 }
