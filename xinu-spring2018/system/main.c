@@ -2,9 +2,9 @@
 
 #include <xinu.h>
 
-#define CPUTEST
+//#define CPUTEST
 //#define IOTEST
-//#define MIXEDTEST
+#define MIXEDTEST
 
 process main(void)
 {

@@ -46,7 +46,7 @@ syscall sleepms(
 		return SYSERR;
 	}
 	proctab[currpid].prstate = PR_SLEEP;
-	//proctab[currpid].prbool = FALSE;
+	proctab[currpid].prblock = 1;
 	resched();
 	restore(mask);
 	return OK;

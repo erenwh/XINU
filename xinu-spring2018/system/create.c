@@ -54,7 +54,7 @@ pid32 create(
 	prptr->prparent = (pid32)getpid();
 	prptr->prhasmsg = FALSE;
 	prptr->prcputot = 1; /* Han Wang:initialize cpu time tracker  */
-	//prptr->prbool = TRUE;
+	prptr->prblock = 0;
 
 	/* Set up stdin, stdout, and stderr descriptors for the shell	*/
 	prptr->prdesc[0] = CONSOLE;

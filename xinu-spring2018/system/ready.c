@@ -23,7 +23,7 @@ status ready(
 
 	prptr = &proctab[pid];
 	prptr->prstate = PR_READY;
-	//prptr->prbool = TRUE;
+	prptr->prblock = 0;
 	//insert(pid, readylist, prptr->prprio);
 	//kprintf("ready:pid:%d, prprio:%d\n",pid,prptr->prprio);
 	xts_enqueue(pid, prptr->prprio);

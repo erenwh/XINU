@@ -54,7 +54,7 @@ void clkhandler()
 	if ((--preempt) <= 0)
 	{
 		//preempt = QUANTUM;
-		//proctab[currpid].prbool = TRUE;
+		proctab[currpid].prblock = 0;
 		resched();
 	}
 }

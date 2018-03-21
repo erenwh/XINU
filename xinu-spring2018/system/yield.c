@@ -11,7 +11,7 @@ syscall yield(void)
 	intmask mask; /* Saved interrupt mask		*/
 
 	mask = disable();
-	//proctab[currpid].prbool = FALSE;
+	proctab[currpid].prblock = 1;
 	resched();
 	restore(mask);
 	return OK;

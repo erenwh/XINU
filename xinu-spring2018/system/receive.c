@@ -17,7 +17,7 @@ umsg32 receive(void)
 	if (prptr->prhasmsg == FALSE)
 	{
 		prptr->prstate = PR_RECV;
-		//prptr->prbool = FALSE;
+		prptr->prblock = 1;
 		resched(); /* Block until message arrives	*/
 	}
 	msg = prptr->prmsg;		 /* Retrieve message		*/

@@ -56,16 +56,24 @@ void resched(void) /* Assumes interrupts are disabled	*/
     { // if its not null proc
         if (ptold->prstate == PR_CURR)
         { //CPU
-            if (preempt <= 0)
+            ptold->prcputot += clkmilli - prctxswbeg;
+
+            if (preempt > 0)
             {
-                ptold->prcputot += clkmilli - prctxswbeg;
-                ptold->prprio = xts_conf[ptold->prprio].xts_tqexp;
+                //give up time slice
+                if (ptold->prblock == 0) //not from blocking call
+                {
+                    ptold->prprio = xts_conf[ptold->prprio].xts_slpret;
+                }
+                else
+                {
+                    ptold->prprio = xts_conf[ptold->prprio].xts_tqexp;
+                }
             }
             else
             {
-                // io intensive
-                ptold->prcputot += clkmilli - prctxswbeg;
-                ptold->prprio = xts_conf[ptold->prprio].xts_slpret;
+                //used up time slice
+                ptold->prprio = xts_conf[ptold->prprio].xts_tqexp;
             }
 
             // if old prio is higher than list
@@ -83,7 +91,6 @@ void resched(void) /* Assumes interrupts are disabled	*/
             xts_enqueue(currpid, ptold->prprio);
             //insert(currpid, readylist, ptold->prprio);
         }
-        
     }
 
     /* Force context switch to highest priority ready process */
