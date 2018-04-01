@@ -18,7 +18,7 @@
 #define	PR_RECTIM	7	/* Process is receiving with timeout	*/
 
 /* lab5(Han Wang) */
-#define PR_SNDBLK	20
+#define PR_SNDBLK	20  /* send block state */
 
 /* Miscellaneous process definitions */
 

@@ -1,4 +1,4 @@
-
+extern syscall sendblk(pid32,umsg32);
 extern void onandon();
 
 
