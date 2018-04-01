@@ -23,9 +23,9 @@ status ready(
 
 	prptr = &proctab[pid];
 	prptr->prstate = PR_READY;
-	prptr->prblock = 0;
+	wakeupbool = 1;
 	//insert(pid, readylist, prptr->prprio);
-	//kprintf("ready:pid:%d, prprio:%d\n",pid,prptr->prprio);
+	//kprintf("\nready:pid:%d, prprio:%d, wake:%d\n", pid, prptr->prprio, wakeupbool);
 	xts_enqueue(pid, prptr->prprio);
 	resched();
 

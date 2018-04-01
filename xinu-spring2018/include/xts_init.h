@@ -1,4 +1,11 @@
+
+
+#ifdef BONUS
+#define MAXSIZE 20
+#else
 #define MAXSIZE 60
+#endif
+
 struct xts_tab
 {
       int xts_quantum; // new time slice
@@ -14,4 +21,4 @@ struct xts_multifb
       qid16 queue_tail; // index to tail of queue
 };
 extern struct xts_multifb xts_ready[];
-
+extern int wakeupbool;

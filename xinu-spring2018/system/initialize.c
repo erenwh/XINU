@@ -4,6 +4,7 @@
 
 #include <xinu.h>
 #include <string.h>
+//#define BONUS
 
 extern void prnsegadd(void);
 
@@ -26,6 +27,7 @@ struct memblk memlist;		   /* List of free memory blocks		*/
 /* lab 4(Han Wang): struct */
 struct xts_tab xts_conf[MAXSIZE];	  /* table of priorities */
 struct xts_multifb xts_ready[MAXSIZE]; /* ready array */
+int wakeupbool;
 
 /* Active system status */
 
@@ -82,15 +84,15 @@ void nulluser()
 
 	//        prnsegadd();
 	/* Enable interrupts */
-	
+
 	enable();
-	
+
 	/* Create a process to execute function main() */
 
 	resume(
 		create((void *)main, INITSTK, INITPRIO, "Main process", 0,
 			   NULL));
-	
+
 	/* Become the Null process (i.e., guarantee that the CPU has	*/
 	/*  something to run when no other process is ready to execute)	*/
 
@@ -171,6 +173,8 @@ static void sysinit()
 	bufinit();
 
 	/* lab4(Han Wang): init TS scheduler */
+
+#ifndef BONUS
 	for (i = 0; i < MAXSIZE; i++)
 	{
 		if (i < 10)
@@ -229,10 +233,124 @@ static void sysinit()
 				xts_conf[i].xts_quantum = 20;
 				xts_conf[i].xts_slpret = 59;
 			}
-			kprintf("xts_quantum:%d, xts_slpret:%d, xts_tqexp:%d\n", xts_conf[i].xts_quantum,
-			 xts_conf[i].xts_slpret, xts_conf[i].xts_tqexp);
+			//kprintf("xts_quantum:%d, xts_slpret:%d, xts_tqexp:%d\n", xts_conf[i].xts_quantum,
+			//xts_conf[i].xts_slpret, xts_conf[i].xts_tqexp);
 		}
 	}
+
+#else BONUS
+	for (int i = 0; i < MAXSIZE; i++)
+	{
+		if (i == 0)
+		{
+			xts_conf[i].xts_quantum = 200;
+			xts_conf[i].xts_tqexp = 0;
+			xts_conf[i].xts_slpret = 13;
+		}
+		if (i >= 1 && 1 <= 2)
+		{
+			xts_conf[i].xts_quantum = 200;
+			xts_conf[i].xts_tqexp = 1;
+			xts_conf[i].xts_slpret = 13;
+		}
+		if (i == 3)
+		{
+			xts_conf[i].xts_quantum = 160;
+			xts_conf[i].xts_tqexp = 1;
+			xts_conf[i].xts_slpret = 14;
+		}
+		if (i >= 4 && i <= 5)
+		{
+			xts_conf[i].xts_quantum = 160;
+			xts_conf[i].xts_tqexp = 2;
+			xts_conf[i].xts_slpret = 14;
+		}
+		if (i == 6)
+		{
+			xts_conf[i].xts_quantum = 160;
+			xts_conf[i].xts_tqexp = 3;
+			xts_conf[i].xts_slpret = 14;
+		}
+		if (i == 7)
+		{
+			xts_conf[i].xts_quantum = 120;
+			xts_conf[i].xts_tqexp = 4;
+			xts_conf[i].xts_slpret = 15;
+		}
+		if (i == 8)
+		{
+			xts_conf[i].xts_quantum = 120;
+			xts_conf[i].xts_tqexp = 5;
+			xts_conf[i].xts_slpret = 15;
+		}
+		if (i == 9)
+		{
+			xts_conf[i].xts_quantum = 120;
+			xts_conf[i].xts_tqexp = 6;
+			xts_conf[i].xts_slpret = 15;
+		}
+		if (i == 10)
+		{
+			xts_conf[i].xts_quantum = 80;
+			xts_conf[i].xts_tqexp = 7;
+			xts_conf[i].xts_slpret = 16;
+		}
+		if (i == 11)
+		{
+			xts_conf[i].xts_quantum = 80;
+			xts_conf[i].xts_tqexp = 8;
+			xts_conf[i].xts_slpret = 16;
+		}
+		if (i == 12)
+		{
+			xts_conf[i].xts_quantum = 80;
+			xts_conf[i].xts_tqexp = 9;
+			xts_conf[i].xts_slpret = 16;
+		}
+		if (i == 13)
+		{
+			xts_conf[i].xts_quantum = 80;
+			xts_conf[i].xts_tqexp = 10;
+			xts_conf[i].xts_slpret = 17;
+		}
+		if (i == 14)
+		{
+			xts_conf[i].xts_quantum = 80;
+			xts_conf[i].xts_tqexp = 11;
+			xts_conf[i].xts_slpret = 17;
+		}
+		if (i == 15)
+		{
+			xts_conf[i].xts_quantum = 80;
+			xts_conf[i].xts_tqexp = 12;
+			xts_conf[i].xts_slpret = 17;
+		}
+		if (i == 16)
+		{
+			xts_conf[i].xts_quantum = 40;
+			xts_conf[i].xts_tqexp = 13;
+			xts_conf[i].xts_slpret = 18;
+		}
+		if (i == 17)
+		{
+			xts_conf[i].xts_quantum = 40;
+			xts_conf[i].xts_tqexp = 14;
+			xts_conf[i].xts_slpret = 18;
+		}
+		if (i == 18)
+		{
+			xts_conf[i].xts_quantum = 40;
+			xts_conf[i].xts_tqexp = 15;
+			xts_conf[i].xts_slpret = 18;
+		}
+		if (i == 19)
+		{
+			xts_conf[i].xts_quantum = 20;
+			xts_conf[i].xts_tqexp = 16;
+			xts_conf[i].xts_slpret = 19;
+		}
+	}
+#endif BONUS
 
 	/* Create a ready list for processes */
 

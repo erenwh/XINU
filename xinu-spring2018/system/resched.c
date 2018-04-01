@@ -35,7 +35,7 @@ void resched(void) /* Assumes interrupts are disabled	*/
         // when null process is the only process
         pri16 readyHigh = xts_priochk();
         //kprintf("readyhigh:%d\n", readyHigh);
-        if (readyHigh == -1)
+        if (readyHigh == -1) // is Ready empty
         {
             // add time slice to null process keeps it running
             preempt = xts_conf[0].xts_quantum;
@@ -57,36 +57,37 @@ void resched(void) /* Assumes interrupts are disabled	*/
         if (ptold->prstate == PR_CURR)
         { //CPU
             ptold->prcputot += clkmilli - prctxswbeg;
-
-            if (preempt > 0)
+            // prioiry update section
+            //if (wakeupbool == 0) // if its not from wakeup()
+            //{
+            if (preempt > 0) // give up unused time slice
             {
-                //give up time slice
-                if (ptold->prblock == 0) //not from blocking call
-                {
-                    ptold->prprio = xts_conf[ptold->prprio].xts_slpret;
-                }
-                else
-                {
-                    ptold->prprio = xts_conf[ptold->prprio].xts_tqexp;
-                }
+                ptold->prprio = xts_conf[ptold->prprio].xts_slpret;
             }
             else
             {
                 //used up time slice
                 ptold->prprio = xts_conf[ptold->prprio].xts_tqexp;
             }
+            //}
 
+            //Ready list checking section
             // if old prio is higher than list
             pri16 readyHigh = xts_priochk();
             if (ptold->prprio > readyHigh)
             {
+                //if (wakeupbool == 0)
+                //{
                 preempt = xts_conf[ptold->prprio].xts_quantum;
+                //}
                 prctxswbeg = clkmilli;
+                wakeupbool = 0;
+
                 return;
             }
 
             /* Old process will no longer remain current */
-
+            wakeupbool = 0;
             ptold->prstate = PR_READY;
             xts_enqueue(currpid, ptold->prprio);
             //insert(currpid, readylist, ptold->prprio);
@@ -100,6 +101,7 @@ void resched(void) /* Assumes interrupts are disabled	*/
     ptnew->prstate = PR_CURR;
     //preempt = QUANTUM; /* Reset time slice for process	*/
     preempt = xts_conf[ptnew->prprio].xts_quantum; //update quantum base on TS table
+    wakeupbool = 0;
     ctxsw(&ptold->prstkptr, &ptnew->prstkptr);
     //Han Wang: new process store the time stamp
     prctxswbeg = clkmilli;

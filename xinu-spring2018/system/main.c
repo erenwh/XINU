@@ -2,9 +2,9 @@
 
 #include <xinu.h>
 
-//#define CPUTEST
+#define CPUTEST
 //#define IOTEST
-#define MIXEDTEST
+//#define MIXEDTEST
 
 process main(void)
 {
@@ -24,7 +24,7 @@ process main(void)
 #ifdef MIXEDTEST
     mixedtest();
 #endif
-/*
+    /*
     recvclr();
     resume(create(shell, 8192, 50, "shell", 1, CONSOLE));
 
