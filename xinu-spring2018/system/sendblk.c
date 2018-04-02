@@ -7,15 +7,15 @@
  * sending process and puts it into a waiting state SNDBLK.
  */
 
-
 syscall sendblk(
     pid32 pid,
-    umsg32 msg
-) {
-    intmask mask;          /* Saved interrupt mask		*/
-    struct procent *prptr; /* Ptr to process' table entry	*/
-    struct procent *prptr_send;
- 
+    umsg32 msg)
+{
+    intmask mask;                  /* Saved interrupt mask		*/
+    struct procent *prptrReceiver; /* Ptr to receiver process' table entry	*/
+    struct procent *prptrSender;   /* Ptr to sender process' table entry	*/
+    //struct procent *prptr_send;
+
     /* interrupt */
     mask = disable();
     if (isbadpid(pid))
@@ -24,34 +24,49 @@ syscall sendblk(
         return SYSERR;
     }
 
-    prptr = &proctab[pid];
-    prptr_send = &proctab[currpid];
+    prptrReceiver = &proctab[pid];
+    prptrSender = &proctab[currpid];
 
-    if ((prptr->prstate == PR_FREE))
+    if ((prptrReceiver->prstate == PR_FREE))
     {
         restore(mask);
         return SYSERR;
     }
 
-    if (prptr->prhasmsg) { // handle blocking message
-        prptr_send->sendblkmsg = msg;
-        prptr_send->sendblkflag = TRUE;
-        if (prptr_send->rcpblkflag == FALSE) { // if there is no process waiting
-            insert(currpid, sleepq);//insertd?
+    if (prptrReceiver->prhasmsg == TRUE)
+    { // if there is a msg to handle
+        if (prptrReceiver->sendqueue == NULL)
+        {
+            prptrReceiver->sendqueue = newqueue();
+            kprintf("\nMaking a queue for msg: %c\n", msg);
         }
-        prptr_send->prstate == PR_SNDBLK;
-        enqueue(currpid, prptr->sendqueue);
+        prptrSender->sendblkflag = TRUE;  // change the sendblkflag
+        prptrSender->sendblkmsg = msg;    // store the message
+        prptrSender->sendblkrcp = pid;    // set recipient
+        prptrSender->prstate = PR_SNDBLK; // change the state to sndblk
+
+        kprintf("\nEnqueuing msg(%c)\n", msg);
+        enqueue(currpid, prptrReceiver->sendqueue);
+
+        prptrReceiver->rcpblkflag = TRUE;
+
+       
         resched();
-    } else {
-        prptr->prmsg = msg;     /* Deliver message		*/
-        prptr->prhasmsg = TRUE; /* Indicate message is waiting	*/
+        /*if (prptrReceiver->prhasmsg == TRUE) 
+        {// process woke up from sleep
+
+        }*/
     }
 
-    if (prptr->prstate == PR_RECV)
+    //kprintf("send\n");
+    prptrReceiver->prmsg = msg;     //Deliver message
+    prptrReceiver->prhasmsg = TRUE; // Indicate message is waiting
+
+    if (prptrReceiver->prstate == PR_RECV)
     {
         ready(pid);
     }
-    else if (prptr->prstate == PR_RECTIM)
+    else if (prptrReceiver->prstate == PR_RECTIM)
     {
         unsleep(pid);
         ready(pid);
