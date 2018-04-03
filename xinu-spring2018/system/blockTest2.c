@@ -17,11 +17,12 @@ void blockTest2()
     sleepms(1000);
 
     resume(rec1);
+    sleepms(5000);
+    kill(rec1);
+    /*resume(rec1);
     sleepms(1000);
     resume(rec1);
     sleepms(1000);
     resume(rec1);
-    sleepms(1000);
-    resume(rec1);
-    sleepms(1000);
+    sleepms(1000);*/
 }

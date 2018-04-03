@@ -50,5 +50,11 @@ syscall sleepms(
 
 	resched();
 	restore(mask);
+
+	// call back
+	if (proctab[currpid].prhasmsg == TRUE)
+	{
+		jumpcb();
+	}
 	return OK;
 }

@@ -9,6 +9,8 @@ void asyMessageRec()
 
     while (1)
     {
-        mrecv_cb();
+        sleepms(300);
+        //mrecv_cb();
+        kprintf("mbuf is '%c'\n", mbuf);
     }
 }

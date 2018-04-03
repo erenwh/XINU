@@ -1,4 +1,9 @@
+extern void jumpcb(void);
+
+extern void asyTest2(void);
 extern void asyTest1(void);
+
+extern void asyMessageSendMult(pid32, umsg32);
 extern void asyMessageSend(pid32, umsg32);
 extern void asyMessageRec(void);
 extern int32 mrecv_cb(void);

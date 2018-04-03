@@ -14,14 +14,24 @@ process main(void)
 #ifdef PART1
 	kprintf("\n***PART1: Test 1***\n");
 	blockTest1();
+	kprintf("\n***Waiting PART1: Test 1 to Finish***\n");
+	sleepms(2000);
 	kprintf("\n***PART1: Test 2***\n");
 	blockTest2();
+	kprintf("\n***Waiting PART1: Test 2 to Finish***\n");
+	sleepms(2000);
 #endif
 
 #ifdef PART2
-
-	kprintf("\n***PART1: Test 1***\n");
+	kprintf("\n***PART2: Test 1 sending from multiple process\n");
 	asyTest1();
+	kprintf("\n***Waiting PART2: Test 1 to Finish***\n");
+	sleepms(4000);
+	kprintf("\n***PART2: Test 2 sending from same process with multiple message using sendblk()***\n");
+	asyTest2();
+	kprintf("\n***Waiting PART2: Test 2 to Finish***\n");
+	sleepms(2000);
+
 #endif
 	/*recvclr();
 	resume(create(shell, 8192, 50, "shell", 1, CONSOLE));

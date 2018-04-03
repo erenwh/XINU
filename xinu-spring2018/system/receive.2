@@ -1,0 +1,24 @@
+.TH receive() 0 "Apr 1, 2018" "1.0"
+.SH NAME
+        umsg32 receive() - System message receive operation using queue(FIFO)
+
+.SH SYNOPSIS
+        #include <xinu.h>
+        umsg32 receive(void)
+
+.SH DESCRIPTION
+        .B receive()
+        Receive() is modified upon original receive that comes with XINU to work with sendblk() as well as regular send. It utilize native queue table implementation from XINU and extract the first element in the queue when process's buffer is emptied and move the first element to the buffer, so that process gain ablility to store multiple messages.
+        It uses a recipient block flag to check whether the current process is has more message in the queue. And if it does, receive set the falg to false and make the message thats the first element in the send queue to the message buffer.
+        It checks again to see if the queue is empty, and set the variable recipie flag to false accordingly.
+        Then it put the process in ready state for further action.
+.SH RETURN VALUE
+        receive() returns the message that is currently in the process message buffer of type umsg32.
+.SH ERRORS
+        No errors
+.SH BUGS
+        No bugs were found yet
+.SH AUTHOR
+        Han Wang, wang2786@purdue.edu
+.SH SEE ALSO
+        send() and sendblk()

@@ -13,7 +13,7 @@ syscall cbreg(int (*fnp)(void))
     }
     else
     {
-        return SYSERR;
+        return SYSERR; //When a process tries to register a second callback function, cbreg() should return with an error.
     }
     //kprintf("cbreg\n");
 

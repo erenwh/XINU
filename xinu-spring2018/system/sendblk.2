@@ -1,0 +1,27 @@
+.TH sendblk 0 "Apr 1, 2018" "1.0"
+.SH NAME
+        syscall sendblk - System message send operation using queue(FIFO)
+
+.SH SYNOPSIS
+        #include <xinu.h>
+        syscall sendblk(pid32, umsg32)
+
+.SH DESCRIPTION
+        .B sendblk()
+        The system call sendblk() is relatated to sys call send(), and it also utilize native queue table that XINU has to help storing multiple messages coming from same or different messages.
+        It allows receive process to store the first message in its buffer, and keep storing incoming messages into a queue called sendqueue.
+        After the process state is changed and sender has store its messages, sendblk() call resched() to do the context swtich.
+        The argument of sendblk() are the pid of the caller, and the message caller want to communicate in type umsg32. 
+        sendblk() puts the process into a wating state call PR_SNDBLK which is implemented in process table within process.h with value of 20.
+
+.SH RETURN VALUE
+        sendblk() returns SYSERR if the pid is not vaild or the reciver process's state is FREE, else it will return OK.
+
+.SH ERRORS
+        when sendblk fails, SYSERR will be returned.
+.SH BUGS
+        No bugs were found yet
+.SH AUTHOR
+        Han Wang, wang2786@purdue.edu
+.SH SEE ALSO
+        send() and receive()

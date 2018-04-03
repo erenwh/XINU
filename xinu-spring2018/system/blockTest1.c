@@ -6,6 +6,8 @@ void blockTest1()
     pid32 send = create(messageSend, 1024, 20, "sender", 2, rec, 'A');
     resume(send);
     sleepms(1000);
+
     resume(rec);
     sleepms(1000);
+    kill(rec);
 }
