@@ -24,7 +24,7 @@ umsg32 receive(void)
 
 	msg = prptr->prmsg;		 /* Retrieve message		*/
 	prptr->prhasmsg = FALSE; /* Reset message flag		*/
-	kprintf("(PID:%d):Message recieved: %c\n", currpid, msg);
+	//kprintf("\n(PID:%d):Message recieved: %c\n", currpid, msg);
 	if (prptr->rcpblkflag == TRUE)
 	{
 		unblocked = dequeue(prptr->sendqueue);

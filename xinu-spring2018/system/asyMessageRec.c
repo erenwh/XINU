@@ -1,5 +1,6 @@
 #include <xinu.h>
 
+umsg32 mbuf;
 void asyMessageRec()
 {
     if (cbreg(&mrecv_cb) != OK)
@@ -11,6 +12,7 @@ void asyMessageRec()
     {
         sleepms(300);
         //mrecv_cb();
-        kprintf("mbuf is '%c'\n", mbuf);
+
+        kprintf("mbuf = %c\n", mbuf);
     }
 }
