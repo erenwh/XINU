@@ -50,7 +50,6 @@ syscall sendblk(
 
         prptrReceiver->rcpblkflag = TRUE;
 
-       
         resched();
         /*if (prptrReceiver->prhasmsg == TRUE) 
         {// process woke up from sleep

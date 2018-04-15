@@ -11,7 +11,7 @@ umsg32 mbuf;
 int recv_cb(void)
 {
 	mbuf = receive();
-	//	kprintf("mbuf = %s\n", mbuf);
+	kprintf("mbuf = %c\n", mbuf);
 	return (OK);
 }
 void sigRec()
@@ -24,7 +24,7 @@ void sigRec()
 	while (TRUE)
 	{
 		sleepms(10);
-		kprintf("mbuf=%s\n", mbuf);
+		//kprintf("mbuf=%s\n", mbuf);
 	}
 	return;
 }
