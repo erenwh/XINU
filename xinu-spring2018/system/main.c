@@ -6,6 +6,8 @@
 #define PART3
 //#define PART4
 
+umsg32 mbuf;
+
 int recv_cb(void)
 {
 	mbuf = receive();
