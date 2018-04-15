@@ -21,7 +21,7 @@ void sigRec()
 
 	while (TRUE)
 	{
-		sleepms(10);
+		sleepms(100);
 	}
 	return;
 }
