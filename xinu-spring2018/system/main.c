@@ -17,7 +17,6 @@ void sigRec()
 	if (sigcbreg(XSIGRCV, &recv_cb, 0) != OK)
 	{
 		kprintf("sigcb registration failed!\n");
-		return 1;
 	}
 
 	while (TRUE)
@@ -39,11 +38,11 @@ void recv_test1()
 	pid32 sigSend1 = create(sigSend, 1024, 20, "sigSend1", 2, sigRec1, 'A');
 	pid32 sigSend2 = create(sigSend, 1024, 20, "sigSend2", 2, sigRec1, 'B');
 	pid32 sigSend3 = create(sigSend, 1024, 20, "sigSend3", 2, sigRec1, 'C');
-	resume(sigsend1);
+	resume(sigSend1);
 	sleepms(500);
-	resume(sigsend2);
+	resume(sigSend2);
 	sleepms(500);
-	resume(sigsend3);
+	resume(sigSend3);
 	sleepms(500);
 
 	resume(sigRec1);
@@ -60,7 +59,7 @@ main(void)
 	kprintf("\nwang2786\n");
 #ifdef PART3
 	kprintf("\n***PART3: Test 1***\n");
-	recv_test1;
+	recv_test1();
 	kprintf("\n***Waiting PART3: Test 1 to Finish***\n");
 	sleepms(2000);
 #endif
