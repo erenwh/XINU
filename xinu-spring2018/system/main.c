@@ -9,7 +9,7 @@
 int recv_cb(void)
 {
 	mbuf = receive();
-	kprintf("cb(pid: %d): mbuf = %s\n", currpid, mbuf);
+	kprintf("mbuf = %s\n", mbuf);
 	return (OK);
 }
 void sigRec()
@@ -21,7 +21,7 @@ void sigRec()
 
 	while (TRUE)
 	{
-		sleepms(100);
+		sleepms(10);
 	}
 	return;
 }
@@ -46,7 +46,7 @@ void recv_test1()
 	sleepms(500);
 
 	resume(sigRec1);
-	sleepms(500);
+	sleepms(2000);
 
 	kill(sigRec1);
 }
