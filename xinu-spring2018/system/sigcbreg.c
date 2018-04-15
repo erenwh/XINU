@@ -22,7 +22,7 @@ syscall sigcbreg(uint16 ssig, int (*fnp)(void), uint32 tmarg)
         return OK;
     }
 
-        //kprintf("cbreg\n");
+    //kprintf("cbreg\n");
 
     restore(mask); // restore interrupts
     return OK;

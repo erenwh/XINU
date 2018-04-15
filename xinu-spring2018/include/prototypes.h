@@ -1,10 +1,15 @@
 /* lab 6 */
-extern syscall sigcbreg(uint16, int (*fnp)(void), uint32 tmarg);
+extern syscall sigcbreg(uint16, int (*fnp)(void), uint32);
 extern pid32 childwait(void);
 
+//testing functions
+extern int recv_cb(void);
+extern void sigRec(void);
+extern void sigsend(pid32, umsg32);
+extern void recv_test1(void);
 /* lab5  */
 extern void jumpcb(void);
-
+extern syscall cbreg(int (*fnp)(void));
 extern void asyTest2(void);
 extern void asyTest1(void);
 
