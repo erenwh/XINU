@@ -1,3 +1,8 @@
+/* lab 6 */
+extern syscall sigcbreg(uint16, int (*fnp)(void), uint32 tmarg);
+extern pid32 childwait(void);
+
+/* lab5  */
 extern void jumpcb(void);
 
 extern void asyTest2(void);
@@ -7,7 +12,7 @@ extern void asyMessageSendMult(pid32, umsg32);
 extern void asyMessageSend(pid32, umsg32);
 extern void asyMessageRec(void);
 extern int32 mrecv_cb(void);
-extern syscall cbreg(int (*fnp)(void));
+
 extern void blockTest2(void);
 extern void messageRec(int);
 extern void messageSend(pid32, char);

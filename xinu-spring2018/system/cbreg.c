@@ -2,19 +2,18 @@
 
 syscall cbreg(int (*fnp)(void))
 {
+
     intmask mask;
     mask = disable(); // disable interrupts
+    if (fnp == NULL)
+    {
+        restore(mask);
+        return SYSERR;
+    }
 
     struct procent *prptr = &proctab[currpid];
-    if (prptr->prhascb == FALSE)
-    {
-        prptr->prhascb = TRUE;
-        prptr->fptr = fnp;
-    }
-    else
-    {
-        return SYSERR; //When a process tries to register a second callback function, cbreg() should return with an error.
-    }
+    prptr->prhascb = TRUE;
+    prptr->fptr = fnp;
     //kprintf("cbreg\n");
 
     restore(mask); // restore interrupts
