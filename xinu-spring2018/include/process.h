@@ -8,15 +8,15 @@
 
 /* Process state constants */
 
-#define PR_FREE 0   /* Process table entry is unused	*/
-#define PR_CURR 1   /* Process is currently running		*/
-#define PR_READY 2  /* Process is on ready queue		*/
-#define PR_RECV 3   /* Process waiting for message		*/
-#define PR_SLEEP 4  /* Process is sleeping			*/
-#define PR_SUSP 5   /* Process is suspended			*/
-#define PR_WAIT 6   /* Process is on semaphore queue	*/
-#define PR_RECTIM 7 /* Process is receiving with timeout	*/
-#define PR_CHLDWAIT	21 /* Process is wating for children	*/
+#define PR_FREE 0	  /* Process table entry is unused	*/
+#define PR_CURR 1	  /* Process is currently running		*/
+#define PR_READY 2	 /* Process is on ready queue		*/
+#define PR_RECV 3	  /* Process waiting for message		*/
+#define PR_SLEEP 4	 /* Process is sleeping			*/
+#define PR_SUSP 5	  /* Process is suspended			*/
+#define PR_WAIT 6	  /* Process is on semaphore queue	*/
+#define PR_RECTIM 7	/* Process is receiving with timeout	*/
+#define PR_CHLDWAIT 21 /* Process is wating for children	*/
 
 /* lab5(Han Wang) */
 #define PR_SNDBLK 20 /* send block state */
@@ -67,6 +67,13 @@ struct procent
 	/* lab5 part 2(Han Wang) */
 	bool8 prhascb; /* Nonzero iff callback function has been registered */
 	int (*fptr)(); /* Pointer to cb function if one has been registered */
+	/* lab6 (Han Wang) */
+	bool8 prhascb1; /* Nonzero iff XSIGCHL callback function has been registered */
+	int (*fptr1)(); /* Pointer to XSIGCHL cb function if one has been registered */
+	bool8 prhascb2; /* Nonzero iff SIGXTM callback function has been registered */
+	int (*fptr2)(); /* Pointer to SIGXTM cb function if one has been registered */
+
+	pid32 returnChildPid; /* stores child pid that is about to be terminated */
 };
 
 /* Marker for the top of a process stack (used to help detect overflow)	*/

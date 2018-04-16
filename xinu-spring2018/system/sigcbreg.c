@@ -21,6 +21,18 @@ syscall sigcbreg(uint16 ssig, int (*fnp)(void), uint32 tmarg)
         restore(mask); //restore interrupts and get ready to return
         return OK;
     }
+    else if (ssig == XSIGCHL) // parent-child signal
+    {
+        struct procent *prptr = &proctab[currpid];
+        prptr->prhascb = TRUE;
+        prptr->fptr = fnp;
+        restore(mask);
+        return OK;
+    }
+    else // XSIGXTM
+    {
+    
+    }
 
     //kprintf("cbreg\n");
 

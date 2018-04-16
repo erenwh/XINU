@@ -2,11 +2,12 @@
 
 void jumpcb()
 {
-    if (proctab[currpid].prhascb == TRUE &&
-        proctab[currpid].fptr != NULL)
+    if (proctab[currpid].prhasmsg == TRUE)
     {
-        proctab[currpid].fptr();
-//        proctab[currpid].prhascb = FALSE;
-//        proctab[currpid].fptr = NULL;
+        if (proctab[currpid].prhascb == TRUE &&
+            proctab[currpid].fptr != NULL)
+        {
+            proctab[currpid].fptr();
+        }
     }
 }

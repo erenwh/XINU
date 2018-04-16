@@ -52,9 +52,8 @@ syscall sleepms(
 	restore(mask);
 
 	// call back
-	if (proctab[currpid].prhasmsg == TRUE)
-	{
-		jumpcb();
-	}
+
+	jumpcb();
+
 	return OK;
 }
