@@ -12,7 +12,7 @@ extern void recv_test1(void);
 extern void child_test1(void);
 extern void parentapp(void);
 extern void childapp(void);
-extern void chl_cb(void);
+extern int chl_cb(void);
 
 /* lab5  */
 extern void jumpcb(void);
