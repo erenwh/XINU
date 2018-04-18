@@ -14,6 +14,13 @@ extern void parentapp(void);
 extern void childapp(void);
 extern int chl_cb(void);
 
+extern void xtm_test1(void);
+extern int wtmcallback(void);
+
+int XTM_rec(void);
+/* lab6 part 4*/
+//extern void mgcTest(void);
+
 /* lab5  */
 extern void jumpcb(void);
 extern syscall cbreg(int (*fnp)(void));

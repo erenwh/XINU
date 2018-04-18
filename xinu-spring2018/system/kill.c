@@ -28,6 +28,16 @@ syscall kill(
 
 	/* lab6 (Han Wang) */
 	prptr->returnChildPid = pid;
+	struct procent *parent = &proctab[prptr->prparent];
+
+	kprintf("prhascb1:%d\n", parent->prhascb1);
+	if (parent->prhascb1 == TRUE)
+	{
+		kprintf("DING\n");
+		parent->fptr1();
+	}
+
+	//kprintf("returnChildPid=%d\n", prptr->returnChildPid);
 
 	send(prptr->prparent, pid);
 	for (i = 0; i < 3; i++)
@@ -35,6 +45,8 @@ syscall kill(
 		close(prptr->prdesc[i]);
 	}
 	freestk(prptr->prstkbase, prptr->prstklen);
+
+	// lab6 part4
 
 	switch (prptr->prstate)
 	{

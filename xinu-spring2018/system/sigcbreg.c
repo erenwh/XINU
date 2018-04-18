@@ -23,17 +23,21 @@ syscall sigcbreg(uint16 ssig, int (*fnp)(void), uint32 tmarg)
     }
     else if (ssig == XSIGCHL) // parent-child signal
     {
+        kprintf("CHL");
         struct procent *prptr = &proctab[currpid];
         prptr->prhascb1 = TRUE;
         prptr->fptr1 = fnp;
         restore(mask);
         return OK;
     }
-    else // XSIGXTM
+    else if (ssig == XSIGXTM) // XSIGXTM
     {
+        kprintf("XTM\n");
         struct procent *prptr = &proctab[currpid];
         prptr->prhascb2 = TRUE;
         prptr->fptr2 = fnp;
+        prptr->walltime = tmarg;
+        kprintf("walltime: %d\n", tmarg);
         restore(mask);
         return OK;
     }

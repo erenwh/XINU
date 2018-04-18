@@ -41,6 +41,12 @@
 /* Number of device descriptors a process can have open */
 
 #define NDESC 5 /* must be odd to make procent 4N bytes	*/
+/*
+struct gb_memblk
+{
+	struct gb_memblk *mnext;
+	uint32 mlength;
+};*/
 
 /* Definition of the process table (multiple of 32 bits) */
 
@@ -74,6 +80,13 @@ struct procent
 	int (*fptr2)(); /* Pointer to SIGXTM cb function if one has been registered */
 
 	pid32 returnChildPid; /* stores child pid that is about to be terminated */
+	int numChildren;	  /* number of children this process have */
+
+	uint32 prstarttime; /* process start time */
+	uint32 walltime;	/* wall time */
+
+	/* part 4 */
+	//struct gb_memblk *prmemlist; /* list of memory that process is occupiying */
 };
 
 /* Marker for the top of a process stack (used to help detect overflow)	*/

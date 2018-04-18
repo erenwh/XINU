@@ -6,9 +6,22 @@
  * clkhandler - high level clock interrupt handler
  *------------------------------------------------------------------------
  */
+
+//pid32 xtmpid;
 void clkhandler()
 {
 	static uint32 count1000 = 1000; /* Count to 1000 ms	*/
+
+	struct procent *prptr = &proctab[currpid];
+	if (prptr->prhascb2 == TRUE)
+	{
+		//kprintf("pid:%d, clktime:%d, starttime:%d. walltime:%d\n", currpid, clktime, prptr->prstarttime, prptr->walltime);
+		if (clktime - prptr->prstarttime >= prptr->walltime)
+		{
+			//kprintf("Ding\n");
+			prptr->fptr2();
+		}
+	}
 
 	/* Decrement the ms counter, and see if a second has passed */
 

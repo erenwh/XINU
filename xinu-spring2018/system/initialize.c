@@ -163,6 +163,8 @@ static void sysinit()
 
 	bufinit();
 
+	//xtmpid = -1;
+
 	/* Create a ready list for processes */
 
 	readylist = newqueue();

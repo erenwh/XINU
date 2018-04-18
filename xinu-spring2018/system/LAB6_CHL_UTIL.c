@@ -14,6 +14,12 @@ void parentapp(void)
     //create child process
     pid32 child1 = create(childapp, 1024, 20, "childrenProcess1", 0, NULL);
     resume(child1);
+    struct procent *prptr = &proctab[currpid];
+    kprintf("#ofchildren:%d\n", prptr->numChildren);
+    /*
+    pid32 child2 = create(childapp, 1024, 20, "childrenProcess2", 0, NULL);
+    resume(child2);
+    kprintf("#ofchildren:%d\n", prptr->numChildren);*/
 
     if (sigcbreg(XSIGCHL, &chl_cb, 0) != OK)
     {
@@ -24,8 +30,8 @@ void parentapp(void)
 
     while (1)
     {
-        sleepms(10);
     }
+
     return;
 }
 
@@ -46,6 +52,9 @@ void childapp(void)
 
 int chl_cb()
 {
-    kprintf("chl_cb\n");
-    return 1;
+    struct procent *prptr = &proctab[currpid];
+    prptr->numChildren--;
+    kprintf("numChildren:%d\n", prptr->numChildren);
+
+    return (OK);
 }
