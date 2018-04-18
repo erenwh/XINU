@@ -6,6 +6,7 @@
 #define PART3_1
 #define PART3_2
 #define PART3_3
+//#define PART3_4
 //#define PART4
 
 //#define DEBUG
@@ -35,6 +36,15 @@ main(void)
 	kprintf("\n***PART3: Test for XSIGXTM***\n");
 	sleepms(500);
 	xtm_test1();
+	sleepms(5000);
+	kprintf("\n***Waiting PART3: Test for XSIGXTM to Finish***\n");
+
+#endif
+
+#ifdef PART3_4
+	kprintf("\n***PART3: Test for Multiple Signal***\n");
+	sleepms(500);
+	multi_test1();
 	sleepms(5000);
 	kprintf("\n***Waiting PART3: Test for XSIGXTM to Finish***\n");
 

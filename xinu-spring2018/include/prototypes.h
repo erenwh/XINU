@@ -19,10 +19,13 @@ extern int chl_cb(void);
 extern void xtm_test1(void);
 extern int wtmcallback(void);
 
+extern void multi_test1(void);
+
 int XTM_rec(void);
 /* lab6 part 4*/
 //extern void mgcTest(void);
 extern void addBlock(struct memblk *, uint32);
+
 
 /* lab5  */
 extern void jumpcb(void);
