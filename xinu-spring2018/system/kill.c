@@ -30,10 +30,10 @@ syscall kill(
 	prptr->returnChildPid = pid;
 	struct procent *parent = &proctab[prptr->prparent];
 
-	kprintf("prhascb1:%d\n", parent->prhascb1);
+	//kprintf("prhascb1:%d\n", parent->prhascb1);
 	if (parent->prhascb1 == TRUE)
 	{
-		kprintf("DING\n");
+		//kprintf("DING\n");
 		parent->fptr1();
 	}
 
@@ -46,8 +46,7 @@ syscall kill(
 	}
 	freestk(prptr->prstkbase, prptr->prstklen);
 
-	// lab6 part4
-
+	
 	switch (prptr->prstate)
 	{
 	case PR_CURR:

@@ -3,9 +3,9 @@
 #include <xinu.h>
 #include <stdio.h>
 
-//#define PART3_1
+#define PART3_1
 #define PART3_2
-//#define PART3_3
+#define PART3_3
 //#define PART4
 
 //#define DEBUG
@@ -22,10 +22,13 @@ main(void)
 	sleepms(2000);
 #endif
 #ifdef PART3_2
-	kprintf("\n***PART3: Test for XSIGCHL***\n");
+	kprintf("\n***PART3: Test1 for XSIGCHL***\n");
 	sleepms(500);
 	child_test1();
 	sleepms(5000);
+	//kprintf("\n***PART3: Test2 for XSIGCHL***\n");
+	//child_test2();
+	//sleepms(5000);
 	kprintf("\n***Waiting PART3: Test for XSIGCHL to Finish***\n");
 #endif
 #ifdef PART3_3
@@ -42,8 +45,6 @@ main(void)
 	resume(create(mgcTest, 1024, 20, "mgcTest", 0));
 	kprintf("MEMLIST(BEFORE): %d\n", memlist.mlength);
 	mgcTest(void);
-	kprintf("MEMLIST(AFTER): %d\n", memlist.mlength);
-	sleep(1000);
 	kprintf("MEMLIST(AFTER): %d\n", memlist.mlength);
 	sleep(1000);
 	kprintf("\n***Waiting PART2: Test 1 to Finish***\n");
@@ -63,3 +64,4 @@ main(void)
 	kprintf("\n\nYou reached the end of the Main().\n\n");
 	return OK;
 }
+

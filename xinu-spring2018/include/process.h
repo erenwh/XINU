@@ -86,7 +86,7 @@ struct procent
 	uint32 walltime;	/* wall time */
 
 	/* part 4 */
-	//struct gb_memblk *prmemlist; /* list of memory that process is occupiying */
+	struct memblk mylist; /* list of memory that process is occupiying */
 };
 
 /* Marker for the top of a process stack (used to help detect overflow)	*/

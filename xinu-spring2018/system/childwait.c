@@ -7,7 +7,7 @@ pid32 childwait(void)
     mask = disable();
     struct procent *prptr = &proctab[currpid];
 
-    kprintf("numchildren:%d, returnchildpid:%d\n", prptr->numChildren, prptr->returnChildPid);
+    //kprintf("numchildren:%d, returnchildpid:%d\n", prptr->numChildren, prptr->returnChildPid);
     // if there is no child and returnChildpid = -1
     if (prptr->numChildren == 0 && prptr->returnChildPid == -1)
     {
@@ -39,7 +39,7 @@ pid32 childwait(void)
     {
         kprintf("DEBUG:childwait 5\n");
     }
-
+    //resched();
     restore(mask);
 
     //TODO implement childwait

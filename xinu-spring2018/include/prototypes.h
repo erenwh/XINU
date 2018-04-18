@@ -10,7 +10,9 @@ extern void sigsend(pid32, umsg32);
 extern void recv_test1(void);
 
 extern void child_test1(void);
+extern void child_test2(void);
 extern void parentapp(void);
+extern void parentapp2(void);
 extern void childapp(void);
 extern int chl_cb(void);
 
@@ -20,6 +22,7 @@ extern int wtmcallback(void);
 int XTM_rec(void);
 /* lab6 part 4*/
 //extern void mgcTest(void);
+extern void addBlock(struct memblk *, uint32);
 
 /* lab5  */
 extern void jumpcb(void);

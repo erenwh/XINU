@@ -14,14 +14,14 @@ void xtm_test1()
 
 int wtmcallback(void)
 {
-    kprintf("Wall time exceeded! XTMcallback(pid%d) called at %d\n", currpid, clktime);
+    kprintf("Wall time exceeded! XTMcallback(pid%d) called at %d seconds\n", currpid, clktime);
     sigcbunreg(XSIGXTM);
     return OK;
 }
 
 int XTM_rec(void)
 {
-    kprintf("clktime:%d\n", clktime);
+    kprintf("clktime:%d seconds\n", clktime);
     if (sigcbreg(XSIGXTM, &wtmcallback, 3) != OK)
     {
         kprintf("wall time callback function registration failed\n");
