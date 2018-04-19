@@ -23,8 +23,9 @@ extern void multi_test1(void);
 
 int XTM_rec(void);
 /* lab6 part 4*/
-//extern void mgcTest(void);
-extern void addBlock(struct memblk *, uint32);
+extern void mgcTest(void);
+extern void addToMylist(struct memblk *, uint32);
+extern void printMylist(void); 
 
 
 /* lab5  */
