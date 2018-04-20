@@ -13,8 +13,9 @@ void bonus_test1()
 
 int bonuscallback(void)
 {
-    kprintf("Han Wang is the owner of this XINU\n");
-    //sigcbunreg(XSIGMY);
+    kprintf("\n(Wang, Han)\n");
+    kprintf("\nwang2786\n");
+    sigcbunreg(XSIGMY);
     return OK;
 }
 

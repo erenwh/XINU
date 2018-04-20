@@ -32,6 +32,15 @@ syscall sigcbunreg(uint16 ssig)
         restore(mask);
         return OK;
     }
+    else if (ssig == XSIGMY) // XSIGXTM
+    {
+
+        prptr->prhascb3 = FALSE;
+        prptr->fptr3 = NULL;
+
+        restore(mask);
+        return OK;
+    }
     else
     {
         return SYSERR;

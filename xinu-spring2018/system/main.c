@@ -6,9 +6,8 @@
 #define PART3_1
 #define PART3_2
 #define PART3_3
-//#define PART3_4
 #define PART4
-//#define BONUS
+#define MYSIG
 
 //#define DEBUG
 process
@@ -42,15 +41,6 @@ main(void)
 
 #endif
 
-#ifdef PART3_4
-	kprintf("\n***PART3: Test for Multiple Signal***\n");
-	sleepms(500);
-	multi_test1();
-	sleepms(5000);
-	kprintf("\n***Waiting PART3: Test for XSIGXTM to Finish***\n");
-
-#endif
-
 #ifdef PART4
 	kprintf("\n***PART2: Test 1 Memory Garbage Collection \n");
 
@@ -62,11 +52,12 @@ main(void)
 	//resume(create(shell, 4096, 20, "shell", 1, CONSOLE));
 #endif
 
-#ifdef BONUS
+#ifdef MYSIG
 	kprintf("\n***BONUS: Test 1 MY SIGNIAL \n");
 
 	bonus_test1();
-	sleep(3);
+	sleep(1);
+
 	//printmem();
 	kprintf("\n***Waiting BONUS: Test 1 to Finish***\n");
 

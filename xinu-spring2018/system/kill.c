@@ -1,7 +1,7 @@
 /* kill.c - kill */
 
 #include <xinu.h>
-
+#define PART4
 /*------------------------------------------------------------------------
  *  kill  -  Kill a process and remove it from the system
  *------------------------------------------------------------------------
@@ -43,7 +43,9 @@ syscall kill(
 		freemem((char *)((uint32)prptr->mylist.mnext + sizeof(struct memblk)),
 				prptr->mylist.mnext->mlength - sizeof(struct memblk));
 	}
+#ifdef PART4
 	printmem();
+#endif
 	/*
 	if (prptr->mylist.mnext != NULL)
 	{

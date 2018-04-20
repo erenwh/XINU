@@ -1,7 +1,7 @@
 /* freemem.c - freemem */
 
 #include <xinu.h>
-
+#define PART4
 /*------------------------------------------------------------------------
  *  freemem  -  Free a memory block, returning the block to the free list
  *------------------------------------------------------------------------
@@ -23,9 +23,11 @@ syscall freemem(
 	}
 
 	uint32 extraspace = (uint32)roundmb(sizeof(struct memblk));
+#ifdef PART4
 
 	kprintf("user is freeing %d, at 0x%08X, extraspace:%d\n", nbytes, blkaddr, extraspace);
 
+#endif
 	nbytes = (uint32)roundmb(nbytes) + extraspace;			 /* Use memblk multiples	*/
 	block = (struct memblk *)((uint32)blkaddr - extraspace); // substract the header
 

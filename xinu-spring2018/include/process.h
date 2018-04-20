@@ -83,8 +83,8 @@ struct procent
 	struct memblk mylist; /* list of memory that process is occupiying */
 
 	/* bonus */
-	//bool8 prhascb3; /* Nonzero iff BONUS callback function has been registered */
-	//int (*fptr3)(); /* Pointer to BONUS cb function if one has been registered */
+	bool8 prhascb3; /* Nonzero iff BONUS callback function has been registered */
+	int (*fptr3)(); /* Pointer to BONUS cb function if one has been registered */
 };
 
 /* Marker for the top of a process stack (used to help detect overflow)	*/

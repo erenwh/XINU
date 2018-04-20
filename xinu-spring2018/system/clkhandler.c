@@ -22,14 +22,8 @@ void clkhandler()
 			prptr->fptr2();
 		}
 	}
-	/*
-	if (prptr->prhascb3 == TRUE)
-	{
 
-		//kprintf("Ding\n");
-		prptr->fptr3();
-	}*/
-
+	
 	/* Decrement the ms counter, and see if a second has passed */
 
 	if ((--count1000) <= 0)

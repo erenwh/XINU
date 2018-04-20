@@ -64,8 +64,8 @@ pid32 create(
 	prptr->prhascb2 = FALSE;
 	prptr->fptr2 = NULL;*/
 
-	//prptr->fptr3 = NULL;
-	//prptr->prhascb3 = FALSE;
+	prptr->fptr3 = NULL;
+	prptr->prhascb3 = FALSE;
 
 	prptr->returnChildPid = -1;
 	prptr->mylist.mnext = NULL;
