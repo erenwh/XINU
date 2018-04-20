@@ -22,6 +22,13 @@ void clkhandler()
 			prptr->fptr2();
 		}
 	}
+	/*
+	if (prptr->prhascb3 == TRUE)
+	{
+
+		//kprintf("Ding\n");
+		prptr->fptr3();
+	}*/
 
 	/* Decrement the ms counter, and see if a second has passed */
 
@@ -57,11 +64,7 @@ void clkhandler()
 	if ((--preempt) <= 0)
 	{
 		preempt = QUANTUM;
-		resched(); /*
-		// call back
-		if (proctab[currpid].prhasmsg == TRUE && proctab[currpid].fptr != NULL)
-		{
-			jumpcb();
-		}*/
+
+		resched();
 	}
 }

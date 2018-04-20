@@ -41,6 +41,16 @@ syscall sigcbreg(uint16 ssig, int (*fnp)(void), uint32 tmarg)
         restore(mask);
         return OK;
     }
+    /*else if (ssig == XSIGMY)
+    {
+        kprintf("XSIGMY\n");
+        struct procent *prptr = &proctab[currpid];
+        prptr->prhascb3 = TRUE;
+        prptr->fptr3 = fnp;
+
+        restore(mask);
+        return OK;
+    }*/
 
     //kprintf("cbreg\n");
 

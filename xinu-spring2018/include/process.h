@@ -41,12 +41,6 @@
 /* Number of device descriptors a process can have open */
 
 #define NDESC 5 /* must be odd to make procent 4N bytes	*/
-/*
-struct gb_memblk
-{
-	struct gb_memblk *mnext;
-	uint32 mlength;
-};*/
 
 /* Definition of the process table (multiple of 32 bits) */
 
@@ -87,6 +81,10 @@ struct procent
 
 	/* part 4 */
 	struct memblk mylist; /* list of memory that process is occupiying */
+
+	/* bonus */
+	//bool8 prhascb3; /* Nonzero iff BONUS callback function has been registered */
+	//int (*fptr3)(); /* Pointer to BONUS cb function if one has been registered */
 };
 
 /* Marker for the top of a process stack (used to help detect overflow)	*/

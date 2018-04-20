@@ -22,8 +22,33 @@ syscall freemem(
 		return SYSERR;
 	}
 
-	nbytes = (uint32)roundmb(nbytes); /* Use memblk multiples	*/
-	block = (struct memblk *)blkaddr;
+	uint32 extraspace = (uint32)roundmb(sizeof(struct memblk));
+
+	kprintf("user is freeing %d, at 0x%08X, extraspace:%d\n", nbytes, blkaddr, extraspace);
+
+	nbytes = (uint32)roundmb(nbytes) + extraspace;			 /* Use memblk multiples	*/
+	block = (struct memblk *)((uint32)blkaddr - extraspace); // substract the header
+
+	struct procent *prptr = &proctab[currpid];
+
+	struct memblk *tempprev, *tempcurr;
+	tempprev = &prptr->mylist;
+	tempcurr = prptr->mylist.mnext;
+
+	while (tempcurr != NULL)
+	{
+		if (tempprev->mnext == block)
+		{
+			break; // found it
+		}
+		tempprev = tempcurr;
+		tempcurr = tempcurr->mnext;
+	}
+	if (tempcurr != NULL)
+	{ // found it
+		//changing the point to the next's next
+		tempprev->mnext = tempcurr->mnext; //remove the block and link it
+	}
 
 	prev = &memlist; /* Walk along free list	*/
 	next = memlist.mnext;

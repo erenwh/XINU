@@ -21,12 +21,17 @@ extern int wtmcallback(void);
 
 extern void multi_test1(void);
 
-int XTM_rec(void);
+extern int XTM_rec(void);
 /* lab6 part 4*/
 extern void mgcTest(void);
 extern void addToMylist(struct memblk *, uint32);
-extern void printMylist(void); 
+extern void printmem(void);
+extern void printMylist(void);
 
+/* lab6 BONUS */
+extern void bonus_test1(void);
+int bonuscallback(void);
+int bonus_rec(void);
 
 /* lab5  */
 extern void jumpcb(void);

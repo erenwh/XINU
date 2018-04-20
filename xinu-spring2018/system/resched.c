@@ -2,20 +2,21 @@
 
 #include <xinu.h>
 
-struct	defer	Defer;
+struct defer Defer;
 
 /*------------------------------------------------------------------------
  *  resched  -  Reschedule processor to highest priority eligible process
  *------------------------------------------------------------------------
  */
-void	resched(void)		/* Assumes interrupts are disabled	*/
+void resched(void) /* Assumes interrupts are disabled	*/
 {
-	struct procent *ptold;	/* Ptr to table entry for old process	*/
-	struct procent *ptnew;	/* Ptr to table entry for new process	*/
+	struct procent *ptold; /* Ptr to table entry for old process	*/
+	struct procent *ptnew; /* Ptr to table entry for new process	*/
 
 	/* If rescheduling is deferred, record attempt and return */
 
-	if (Defer.ndefers > 0) {
+	if (Defer.ndefers > 0)
+	{
 		Defer.attempt = TRUE;
 		return;
 	}
@@ -24,8 +25,10 @@ void	resched(void)		/* Assumes interrupts are disabled	*/
 
 	ptold = &proctab[currpid];
 
-	if (ptold->prstate == PR_CURR) {  /* Process remains eligible */
-		if (ptold->prprio > firstkey(readylist)) {
+	if (ptold->prstate == PR_CURR)
+	{ /* Process remains eligible */
+		if (ptold->prprio > firstkey(readylist))
+		{
 			return;
 		}
 
@@ -40,7 +43,7 @@ void	resched(void)		/* Assumes interrupts are disabled	*/
 	currpid = dequeue(readylist);
 	ptnew = &proctab[currpid];
 	ptnew->prstate = PR_CURR;
-	preempt = QUANTUM;		/* Reset time slice for process	*/
+	preempt = QUANTUM; /* Reset time slice for process	*/
 	ctxsw(&ptold->prstkptr, &ptnew->prstkptr);
 
 	/* Old process returns here when resumed */
@@ -52,29 +55,33 @@ void	resched(void)		/* Assumes interrupts are disabled	*/
  *  resched_cntl  -  Control whether rescheduling is deferred or allowed
  *------------------------------------------------------------------------
  */
-status	resched_cntl(		/* Assumes interrupts are disabled	*/
-	  int32	defer		/* Either DEFER_START or DEFER_STOP	*/
-	)
+status resched_cntl(			/* Assumes interrupts are disabled	*/
+					int32 defer /* Either DEFER_START or DEFER_STOP	*/
+)
 {
-	switch (defer) {
+	switch (defer)
+	{
 
-	    case DEFER_START:	/* Handle a deferral request */
+	case DEFER_START: /* Handle a deferral request */
 
-		if (Defer.ndefers++ == 0) {
+		if (Defer.ndefers++ == 0)
+		{
 			Defer.attempt = FALSE;
 		}
 		return OK;
 
-	    case DEFER_STOP:	/* Handle end of deferral */
-		if (Defer.ndefers <= 0) {
+	case DEFER_STOP: /* Handle end of deferral */
+		if (Defer.ndefers <= 0)
+		{
 			return SYSERR;
 		}
-		if ( (--Defer.ndefers == 0) && Defer.attempt ) {
+		if ((--Defer.ndefers == 0) && Defer.attempt)
+		{
 			resched();
 		}
 		return OK;
 
-	    default:
+	default:
 		return SYSERR;
 	}
 }

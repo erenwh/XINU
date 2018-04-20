@@ -38,6 +38,26 @@ syscall kill(
 	}
 
 	//kprintf("returnChildPid=%d\n", prptr->returnChildPid);
+	while (prptr->mylist.mnext != NULL)
+	{
+		freemem((char *)((uint32)prptr->mylist.mnext + sizeof(struct memblk)),
+				prptr->mylist.mnext->mlength - sizeof(struct memblk));
+	}
+	printmem();
+	/*
+	if (prptr->mylist.mnext != NULL)
+	{
+		tempblk = prptr->mylist.mnext;
+		int i = 0;
+		//("i:%d, length: %d\n", i, tempblk->mlength);
+		while (tempblk->mnext != NULL)
+		{
+			tempblk = tempblk->mnext;											// move pointer
+			freemem((char *)prptr->mylist.mnext, prptr->mylist.mnext->mlength); //first node
+			prptr->mylist.mnext = tempblk;
+		}
+		freemem((char *)tempblk, tempblk->mlength); // free
+	}*/
 
 	send(prptr->prparent, pid);
 	for (i = 0; i < 3; i++)
@@ -46,7 +66,6 @@ syscall kill(
 	}
 	freestk(prptr->prstkbase, prptr->prstklen);
 
-	
 	switch (prptr->prstate)
 	{
 	case PR_CURR:

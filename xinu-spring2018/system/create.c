@@ -57,13 +57,18 @@ pid32 create(
 	prptr->numChildren = 0;
 	struct procent *parent = &proctab[prptr->prparent];
 	parent->numChildren++;
-	//prptr->fptr = NULL;
-	//prptr->prhascb1 = FALSE;
-	//prptr->fptr1 = NULL;
-	//prptr->prhascb2 = FALSE;
-	//prptr->fptr2 = NULL;
+	/*
+	prptr->fptr = NULL;
+	prptr->prhascb1 = FALSE;
+	prptr->fptr1 = NULL;
+	prptr->prhascb2 = FALSE;
+	prptr->fptr2 = NULL;*/
+
+	//prptr->fptr3 = NULL;
+	//prptr->prhascb3 = FALSE;
 
 	prptr->returnChildPid = -1;
+	prptr->mylist.mnext = NULL;
 
 	/* Set up stdin, stdout, and stderr descriptors for the shell	*/
 	prptr->prdesc[0] = CONSOLE;
