@@ -12,7 +12,9 @@ void asyMessageRec()
     {
         sleepms(300);
         //mrecv_cb();
-
+        intmask mask;
+        mask = disable(); // disable interrupts
         kprintf("mbuf = %c\n", mbuf);
+        restore(mask); // restore interrupts
     }
 }

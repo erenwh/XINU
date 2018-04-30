@@ -1,0 +1,236 @@
+<!DOCTYPE doctype PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+  <meta name="GENERATOR"
+ content="Mozilla/4.77 [en] (X11; U; SunOS 5.6 i86pc) [Netscape]">
+  <title>Lab 4</title>
+</head>
+<body>
+<center>
+<h4><font size="+2">CS 354 Spring 2018</font></h4>
+</center>
+<center>
+<h4><font size="+2">Lab 4: Fast TS Process Scheduling (250 pts)</font></h4>
+</center>
+<center>
+<p><font size="+2">&nbsp;<b> Due: 03/20/2018 (Tue), 11:59PM</b></font></p>
+<hr size="2" width="100%"></center>
+<p></p>
+
+<h2>1. Objectives</h2>
+<p>
+In this lab, you will implement UNIX Solaris' TS scheduler in XINU. By using a
+multilevel feedback control queue, you will achieve constant overhead process scheduling
+independent of the number of processes in the system.
+</p>
+
+<hr width="100%">
+<h2>2. Readings</h2>
+
+<p>
+  Read Chapters 6 and 7 of the XINU textbook.
+</ul>
+</p>
+
+<hr width="100%">
+<h2>3. Implementation of UNIX Solaris TS scheduling</h2>
+
+<h3> 3.1 Process classification for priority increase/decrease</h3>
+
+<p>
+Classification of processes based on their observed run-time behavior
+must be done by the kernel efficiently so that the scheduler's footprint
+is kept small. As discussed in class, a simple strategy used by UNIX Solaris
+is to classify a process based on its most recent scheduling related
+activity: (i) if a process consumed all of its time slice and needed to
+be preempted by the clock interrupt handler then the process is viewed
+as CPU-intensive; or (ii) a process voluntarily relinquishes the CPU
+by making a blocking system call (e.g., sleepms()) in which case the
+process is viewed as I/O-intensive. In both instances, the scheduler
+will change the process' priority value. In case (i), the process
+is demoted by reducing its priority; in (ii), the process's priority is
+bumped up. 
+</p>
+
+<p>
+After this change of priority, the scheduler picks a
+highest priority process from ready processes
+to run, round-robin if there are two or more
+highest priority processes.
+As to the time slice, in the case of (i), the quantum is increased to
+reflect the CPU-intensive behavior of the process. In case (ii), the opposite
+occurs.
+The exact quantitative change in priority and quantum values is
+determined by a system configuration file which contains calibrations to
+suit a particular operating environment. The generic, default
+configuration file is given by:
+<ul>
+<li>
+Solaris UNIX dispatch table:
+<a href="http://www.cs.purdue.edu/homes/cs354/disp-table-solaris.txt">
+TS</a></li>
+</ul>
+Ignore columns 4 and 5 which are failsafe mechanisms to
+prevent starvation if TS scheduling goes awry.
+Use a data structure xts_tab defined in kernel header file xts_init.h that you
+will create and place in include/
+<pre>
+struct xts_tab {
+  int xts_quantum;       // new time slice
+  int xts_tqexp;         // new priority: CPU-intensive (time quantum expired)
+  int xts_slpret;        // new priority: I/O-intensive (sleep return)
+};
+
+extern struct xts_tab xts_conf[];
+</pre>
+which is read to initialize a kernel data structure,
+struct xts_tab xts_conf[60],
+in sysinit() in initialize.c. 
+Since XINU does not have a file system, the content of the
+Solaris dispatch must be hardcoded when xts_tab xts_conf[] is initialized.
+Replace the constant "60"
+using #define in xts_init.h. Choose your own name for the
+constant definition. Note that in Solaris, the TS scheduling table
+is exported as a configurable kernel data structure (requires superuser
+status). Include xts_init.h in xinu.h.
+</p>
+
+<h3> 3.2 XINU kernel modification</h3>
+
+<p>
+Use the XINU kernel from lab3 with CPU usage monitoring code but without
+fair scheduling modifications to implement UNIX Solaris TS scheduling. A
+new data structure, xts_multifb, defined in xts_init.h is used to
+achieve constant overhead TS scheduling
+<pre>
+struct xts_multifb {
+  int status;             // binary flag: 0 if queue is empty, 1 otherwise
+  qid16 queue_head;       // index to head of queue
+  qid16 queue_tail;       // index to tail of queue
+};
+
+extern struct xts_multifb xts_ready[];
+</pre>
+where the size of the array xts_ready[] is the same as xts_conf[].
+xts_ready[] of type struct xts_multifb replaces XINU's ready list to go from
+linear scheduling overhead to constant overhead. Thus we will ignore XINU's
+ready list but continue to use, struct qentry queuetab[NQENT], as the data
+structure used to maintain queues in XINU. This XINU specific approach to
+supporting queues works since a XINU process can only be in one queue (e.g.,
+a process is ready or sleeping but not both).
+</p>
+
+<p>
+Implement an internal kernel function, int xts_enqueue(pid32 pid, pri16 prio), in xts_enqueue.c
+that enqueues the process given by pid and priority prio into the multilevel feedback queue
+at the appropriate place. xts_enqueue() return 0 if successful, -1 otherwise.
+Implement a function, pid32 xts_dequeue(void), in xts_dequeue.c 
+that returns the process ID of a highest priority ready process
+from xts_ready[]. If there are no ready processes outside of the kernel's NULL process, its
+PID 0 is returned.
+Implement a function, pri16 xts_priochk(void), in xts_priochk.c that returns the
+highest priority of (ready) processes in xts_ready[]. xts_priochk() is used by the scheduler
+resched() when determining if the current process should continue to run or not.
+</p>
+
+<p>
+When making code changes to XINU, please follow the same guidelines as in lab3: clearly
+indicate where in the source code changes are being made and for what purpose, DEBUG
+printouts remain conditional.
+</p>
+
+
+<h3> 3.3 Performance evaluation</h3>
+
+<p>
+Carry out the same performance evaluation as in Problem 4.3 of lab3. Use the same benchmark
+applications and calls to getcputot() to monitor CPU usage and gauge if your implementation of
+UNIX Solaris TS scheduling in XINU is achieving "fair" sharing of CPU cycles. 
+Discuss your findings in Lab4Answers.pdf. Describe in your write-up how you are handling
+the NULL process under TS scheduling so that it is only executed if there are no other
+ready processes.
+</p>
+
+<p>
+<b>Important: Before performing any kernel modification, please
+back up the files (even intermediate files to guard against accidental
+deletions) so that you can go back to a previous code base and recover
+more easily from human errors in the development process.</b>
+</p>
+
+<hr>
+
+<h2><b>Bonus problem</b> (20 pts)</h2>
+
+<p>
+The 60 priority levels used in UNIX Solaris has proven to be effective
+in real-world deployments, however, that is not to say that fewer
+priority levels will not work (almost) equally well. As mentioned in
+class, versions of BSD UNIX and Windows use significantly fewer priority
+levels and are known to operate well. Modify the UNIX Solaris TS
+implementation of Problem 3 so that priority levels are reduced from
+60 to 20. The code should be the same except for reading 20 rows of
+values instead of 60 and initializing xts_conf[] with different values.
+Create a new calibration table that follows the same format as
+<a href="http://www.cs.purdue.edu/homes/cs354/disp-table-solaris.txt">
+TS</a> but has only 20 priority levels. Change the values of the entries
+so that the TS scheduling approach we discussed (higher relative priority
+to I/O-bound processes over CPU-bound processes, opposite for time slice)
+is followed. Set the values as you see fit so as to achieve fair
+sharing of CPU cycles. 
+As in Problem 3, 
+Benchmark the scheduler with the modified
+scheduling calibration table on the "half-and-half"
+test case only. Discuss your findings in Lab4Answers.pdf.
+</p>
+
+<hr>
+
+<p>
+<b>Important: 
+Please comment your code changes in Xinu such that (a) <i>where</i> changes
+are made is highlighted, and (b) <i>what</i> changes are made is conveyed.
+</b>
+</p>
+
+<hr width="100%">
+<h2><b>Turn-in Instructions</b></h2>
+
+<p>
+Before submitting your work, make sure to double-check the
+<a href="http://www.cs.purdue.edu/homes/ogg/cs354_spring2018.html">TA Notes</a>
+to ensure that additional requirements and instructions have been followed.
+</p>
+
+<p><i>Electronic turn-in instructions:</i></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; i) Go to the xinu-spring2018/compile
+directory and do "make clean".</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ii) Go to the directory of which
+your xinu-spring2018 directory is a subdirectory. (NOTE: please do not rename xinu-spring2018,
+or any of its subdirectories.)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+e.g., if /homes/joe/xinu-spring2018 is your directory structure, go to 
+/homes/joe
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; iii) Type the following command
+</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+turnin -c cs354 -p lab4 xinu-spring2018</p>
+<p></p>
+<p>
+You can check/list the submitted files using
+<br><br>
+turnin -c cs354 -p lab4 -v
+</p>
+<p><b><i>Important: Please provide comments inside your code so that 
+its function and flow can be conveyed to the reader.
+Turn off all debugging output before you submit your code.</i></b>
+<br>
+</p>
+
+<hr><a href="../index.html">Back to the CS 354 web page</a><br>
+
+</body>
+</html>
